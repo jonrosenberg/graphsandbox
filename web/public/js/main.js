@@ -181,18 +181,18 @@ d3.csv("/data/ndx.csv", function (data) {
                         return v + "%";
                     });
 
-            gainOrLossChart.width(180)
-                    .height(180)
-                    .radius(80)
+            gainOrLossChart.width(140)
+                    .height(140)
+                    .radius(60)
                     .dimension(gainOrLoss)
                     .group(gainOrLossGroup)
                     .label(function (d) {
                         return d.data.key + "(" + Math.floor(d.data.value / all.value() * 100) + "%)";
                     });
 
-            quarterChart.width(180)
-                    .height(180)
-                    .radius(80)
+            quarterChart.width(140)
+                    .height(140)
+                    .radius(60)
                     .innerRadius(30)
                     .dimension(quarter)
                     .group(quarterGroup);

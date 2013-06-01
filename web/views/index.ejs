@@ -6,11 +6,14 @@
     <title><%= title %></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
+    
+    <link rel="stylesheet" type="text/css" href="/css/dc.css">
         
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/stylesheets/flat-ui.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="/css/flat-ui.css" rel="stylesheet">
+    <link rel='stylesheet' href='/css/style.css' />
+    
     <style>
         body {
             padding-top: 60px;
@@ -60,15 +63,25 @@
 
     <div class="container">
     	
-    	<div id="gain-loss-chart"></div>
-    	<div id="fluctuation-chart"></div>
-    	<div id="quarter-chart"></div>
-    	<div id="day-of-week-chart"></div>
-    	<div id="monthly-move-chart"></div>
-    	<div id="monthly-volume-chart"></div>
-    	<div id="yearly-bubble-chart"></div>
-    	<div id=""></div>
-
+    		
+    	<a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+    	<div class="row">
+    		<div id="yearly-bubble-chart"></div>
+    	</div>
+    	<div class="row">
+    		<div class="span2"><div id="gain-loss-chart">&nbsp;</div></div>
+    		<div class="span5"><div id="fluctuation-chart">&nbsp;</div></div>
+    		<div class="span2"><div id="quarter-chart">&nbsp;</div></div>
+    		<div class="span3"><div id="day-of-week-chart"></div></div>
+    	</div>
+    	<div class="row">
+    		<div id="monthly-move-chart"></div>
+    	</div>
+    	<div class="row">
+    		<div id="monthly-volume-chart"></div>
+    	</div>
+    	
+    	
         <!-- Main hero unit for a primary marketing message or call to action -->
         <div class="hero-unit hide">
             <h1>Hello, world!</h1>
