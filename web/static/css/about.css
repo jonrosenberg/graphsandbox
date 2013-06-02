@@ -1,0 +1,40 @@
+
+.gothic {
+    font-family: 'titillium',verdana,arial,sans-serif;
+    font-weight: normal;
+}
+
+
+.wraptocenter {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width: ...;
+    height: ...;
+}
+.wraptocenter * {
+    vertical-align: middle;
+}
+/*\*//*/
+.wraptocenter {
+    display: block;
+}
+.wraptocenter span {
+    display: inline-block;
+    height: 100%;
+    width: 1px;
+}
+/**/
+
+<!--[if lt IE 8]><style>
+.wraptocenter span {
+    display: inline-block;
+    height: 100%;
+}
+
+
+.technologycard
+{
+  min-width: 170px;
+  min-height: 170px;
+}

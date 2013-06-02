@@ -1,0 +1,76 @@
+/*------------------------------------------------------------------
+
+[Application.css]
+
+	Project:		Dashboard
+	Version:		1.0
+	Last change:	10/10/2012	
+
+
+-------------------------------------------------------------------*/
+/*------------------------------------------------------------------
+
+[Misc Styles]
+
+-------------------------------------------------------------------*/
+#flotTip {
+  padding: 3px 6px !important;
+  color: #FFF !important;
+  font-size: 11px !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  background-color: #222 !important;
+  border: 1px solid #000 !important;
+  -webkit-border-radius: 3px !important;
+  -moz-border-radius: 3px !important;
+  border-radius: 3px !important;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+.chart-holder {
+  width: 100%;
+  height: 325px;
+}
+
+.lc-lonely-buttons button{margin-top:3px}
+
+[class^="charticon-"],[class*=" charticon-"]
+{
+    display:inline-block;
+    width:24px;
+    height:24px;
+    line-height:24px;
+    vertical-align:text-top;
+    background-image:url("charticons.png");
+    background-position:24px 24px;
+    background-repeat:no-repeat
+}
+.charticon-bubble{background-position:0 0}
+.charticon-force{background-position:-24px 0}
+.charticon-map{background-position:-48px 0}
+.charticon-pack{background-position:-72px 0}
+.charticon-sun{background-position:-96px 0}
+.charticon-list{background-position:-120px 0}
+.charticon-cloud{background-position:-144px 0}
+.charticon-stream{background-position:-168px 0}
+[class^="chartsymbol-"],[class*=" chartsymbol-"]
+{
+    display:inline-block;
+    width:48px;
+    height:48px;
+    line-height:48px;
+    vertical-align:text-top;
+    background-image:url("chartsymbols.png");
+    background-position:48px 48px;
+    background-repeat:no-repeat
+}
+.chartsymbol-bubble{background-position:0 0}
+.chartsymbol-force{background-position:-48px 0}
+.chartsymbol-map{background-position:-96px 0}
+.chartsymbol-pack{background-position:-144px 0}
+.chartsymbol-sun{background-position:-192px 0}
+.chartsymbol-list{background-position:-240px 0}
+.chartsymbol-cloud{background-position:-288px 0}
+.chartsymbol-stream{background-position:-336px 0}
+

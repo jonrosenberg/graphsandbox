@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title><%= title %> @ <%= currentViewName %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="<%= description %>">
+	<meta name="author" content="<%= author %>">
+
+	<!-- Bootstrap -->
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+	<link href="css/themes/default.css" rel="stylesheet" id="theme-specific-script">
+	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" id="main-theme-script">
+  
+    <!-- Simplenso -->
+	<link href="css/simplenso.css" rel="stylesheet">
+  
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<!-- Le fav and touch icons -->
+	<link rel="shortcut icon" href="images/ico/favicon.ico">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+	<!-- Modernizer -->
+	<script type="text/javascript" src="scripts/d3/modernizr-2.5.3-respond-1.1.0.min.js"></script>   
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified//jquery.ui.mouse.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.sortable.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.widget.min.js"></script>
+
+    <!-- jQuery UI Draggable & droppable -->
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.draggable.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.droppable.min.js"></script>
+
+    <!-- jQuery Cookie -->
+    <script type="text/javascript" src="scripts/jquery.cookie/jquery.cookie.js"></script>
+
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="scripts/bootbox/bootbox.min.js"></script>
+
+    <!-- Charting -->
+    <link rel="stylesheet" href="scripts/cirque/cirque.css" />
+    <link rel="stylesheet" href="css/charts/charting_application_simple.css" />
+
+    <style>
+    .pagination a
+    {
+        float: left;
+        padding: 0 8px;
+        line-height: 24px;
+    }
+    div.dataTables_info
+    {
+      padding-top: 3px;
+      font-size:90%;
+    }
+    div.dataTables_length
+    {
+        display:none;
+    }
+    </style>
+
+    <%- renderScriptsTags(scripts) %>
+
+    <!-- Base Portal Package -->
+    <script type="text/javascript" src="scripts/simplenso/simplenso2.js"></script>
+
+    <!-- Base Charting Package -->
+    <script type="text/javascript" src="scripts/charts/basecharts.js"></script>
+</head>
+<body id="dashboard" style="padding-top:0px;background-color:#FCFCFC;">
+  <% console.log(user); %>
+  <% if (typeof user === "undefined") {  user = { displayName: 'Not Logged In', authenticated: false, role: 'Guest', projects:[1] }; } %>
+
+<!-- Top navigation bar -->
+<div class="navbar navbars-fixed-top">
+  <div class="navbar-inner" style="background-image:none; background-color:#EDEDED;">
+    <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <a class="brand" href="/index.html" style="margin:4px 8px 0 0px; padding:0;">
+         <img style="margin:0;padding:0;" height="32" alt="Circle Media" src="img/datakid_logo.png"></a>
+      <a class="brand" style="padding-top:10px;padding-bottom:10px;" href="/index.html"><%= company %></a>
+
+	  <% if (user.authenticated) { %>
+		  <div class="btn-group pull-right" style="margin:0px;padding:0px;">
+              <% if (!showNavMenu) { %>
+            <!-- Put a project picker on there -->
+            <div style="display:inline-block;margin:0px;padding:0px;margin-top:6px;">
+                <form id="Form1" name="projectSelector" action="/selectProject" method="post" style="margin:0px;padding:0px;">
+                <fieldset>
+                    <select name="selectedProjectId" id="select1" class="span2" onChange="this.form.submit();" style="margin:0px;">
+			        <% for (var i = 0; i < user.projects.length; i++) { var projectId = user.projects[i]; var project = projects[projectId]; %>
+				        <option<%= (selectedProjectId == project.id) ? " selected='true'" : "" %> value="<%= project.id %>"><%= project.name %></option>
+			        <% } %>
+                    </select>
+                </fieldset>
+                </form>				
+            </div>
+              <% } %>
+            <div style="display:inline-block;">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			  <i class="icon-user"></i>
+			  <%= user.displayName %>
+			  <span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+			  <li><a href="#">View Profile</a></li>
+			  <% if (user.role == "Administrator") { %>
+			     <li><a href="#">Manage Site</a></li>
+			  <% } %>
+			  <li><a class="cookie-delete" href="#">Delete Cookies</a></li>
+			  <li><a href="#">Edit Settings</a></li>
+			  <li class="divider"></li>
+			  <li><a href="login.html">Logout</a></li>
+			</ul>
+            </div>
+		  </div>
+	  <% } else { %>
+		  <div class="btn-group pull-right">
+			<a class="btn" href="/login.html">Sign In</a>
+		  </div>
+	  <% } %>
+
+      <div class="nav-collapse">
+      </div><!--/.nav-collapse -->
+    </div>
+  </div>
+</div>
+
+<!-- Main Content Area | Side Nav | Content -->
+<div class="container-fluid">
+
+<div class="row-fluid">
+  <!-- Side Navigation -->
+  <% if (showNavMenu) { %>
+  <div class="span2">
+    
+  <!-- Put a project picker on there -->
+    <div style="margin-top:4px;">
+      <form id="projectSelector" name="projectSelector" action="/selectProject" method="post">
+        <fieldset>
+          <select name="selectedProjectId" id="selectedProjectId" class="span12" onChange="this.form.submit();">
+			<% for (var i = 0; i < user.projects.length; i++) { var projectId = user.projects[i]; var project = projects[projectId]; %>
+				<option<%= (selectedProjectId == project.id) ? " selected='true'" : "" %> value="<%= project.id %>"><%= project.name %></option>
+			<% } %>
+          </select>
+        </fieldset>
+      </form>				
+    </div>
+
+    <div class="sidebar-nav" style="padding-top:2px;">
+      <div>	   
+		<div class="accordion" id="accordion2">
+
+		<!-- Optional Admin Filters -->
+		<% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+			<% if(menuSection.name == "Main") { %>
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				Admin
+			  </a>
+			</div>
+			<div id="collapseOne" class="accordion-body collapse">
+			  <div class="accordion-inner">
+			    <ul class="nav nav-list">
+					<li class="nav-header"><%= menuSection.name %></li>
+					<% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+					<li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						<a href="<%= menuItem.href %>">
+						<i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						</a>
+					</li>            
+					<% } %>
+				 </ul>
+			  </div>
+			</div>
+		  </div>
+		<% } %>
+		<% } %>
+
+		<!-- Optional Views, currently Disabled -->
+		 <% if(1 == 2) { %>
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseViews">
+				Views
+			  </a>
+			</div>
+			<div id="collapseViews" class="accordion-body collapse in">
+			  <div class="accordion-inner">
+			    <ul class="nav nav-list">
+				  <% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+				  	<% if(menuSection.name == "Views") { %>
+					  <li class="nav-header"><%= menuSection.name %></li>
+					  <% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+						<li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						  <a href="<%= menuItem.href %>">
+							<i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						  </a>
+						</li>            
+					<% } %>
+				  <% } %>
+				  <% } %>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		 <% } %>
+
+ 		  <!-- Date Filters -->
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDateFilter">
+				Date Filters
+			  </a>
+			</div>
+			<div id="collapseDateFilter" class="accordion-body collapse in">
+			  <div class="accordion-inner">
+				<div>
+					<form>
+					  <fieldset>
+						<label class="checkbox">
+							<input type="checkbox"><strong>Start Date</strong>
+						</label>
+						<input type="text" placeholder="08/01/2012" class="span8">
+						<select class="span8">
+							<option>1:00 am</option>
+							<option>2:00 am</option>
+							<option>3:00 am</option>
+							<option>4:00 am</option>
+							<option>5:00 am</option>
+							<option>6:00 am</option>
+							<option>7:00 am</option>
+							<option>8:00 am</option>
+							<option>9:00 am</option>
+							<option>10:00 am</option>
+							<option>11:00 am</option>
+							<option>12:00 am</option>
+							<option>1:00 pm</option>
+							<option>2:00 pm</option>
+							<option>3:00 pm</option>
+							<option>4:00 pm</option>
+							<option>5:00 pm</option>
+							<option>6:00 pm</option>
+							<option>7:00 pm</option>
+							<option>8:00 pm</option>
+							<option>9:00 pm</option>
+							<option>10:00 pm</option>
+							<option>11:00 pm</option>
+							<option>12:00 pm</option>
+						</select>
+						
+						<br/>
+						<label class="checkbox">
+							<input type="checkbox"><strong>End Date</strong>
+						</label>
+						<input type="text" placeholder="08/01/2012" class="span8">
+						<select class="span8">
+							<option>1:00 am</option>
+							<option>2:00 am</option>
+							<option>3:00 am</option>
+							<option>4:00 am</option>
+							<option>5:00 am</option>
+							<option>6:00 am</option>
+							<option>7:00 am</option>
+							<option>8:00 am</option>
+							<option>9:00 am</option>
+							<option>10:00 am</option>
+							<option>11:00 am</option>
+							<option>12:00 am</option>
+							<option>1:00 pm</option>
+							<option>2:00 pm</option>
+							<option>3:00 pm</option>
+							<option>4:00 pm</option>
+							<option>5:00 pm</option>
+							<option>6:00 pm</option>
+							<option>7:00 pm</option>
+							<option>8:00 pm</option>
+							<option>9:00 pm</option>
+							<option>10:00 pm</option>
+							<option>11:00 pm</option>
+							<option>12:00 pm</option>
+						</select>
+					  </fieldset>
+					</form>				
+				  </div>
+			  </div>
+			</div>
+		  </div>
+
+ 		  <!-- Channel Filters -->
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseChannelFilter">
+				Channel Filters
+			  </a>
+			</div>
+			<div id="collapseChannelFilter" class="accordion-body collapse">
+			  <div class="accordion-inner">
+				<div>
+					<form>
+					  <fieldset>
+						<label><strong>Channels</strong></label>
+						<label class="checkbox"><input type="checkbox" value="">Social</label>
+						<label class="checkbox"><input type="checkbox" value="">Web</label>
+						<label class="checkbox"><input type="checkbox" value="">Apps</label>
+						<label class="checkbox"><input type="checkbox" value="">Paid Digital</label>
+						
+						<br/>
+						<label><strong>Mobile Only?</strong></label>
+						<label class="radio">
+							<input type="radio" name="optionsRadios" id="optionsRadios1" value="Yes" checked>
+							Yes
+						</label>
+						<label class="radio">
+							<input type="radio" name="optionsRadios" id="optionsRadios2" value="No">
+							No
+						</label>					  
+					  </fieldset>
+					</form>				
+				  </div>
+			  </div>
+			</div>
+		  </div>
+
+ 		  <!-- Demographics Filters -->
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDemographicFilter">
+				Audience Filters
+			  </a>
+			</div>
+			<div id="collapseDemographicFilter" class="accordion-body collapse">
+			  <div class="accordion-inner">
+				<div>
+					<form>
+					  <fieldset>
+						<label class="control-label" for="inputAgeGroup"><strong>Age Group</strong></label>
+						<select id="inputAgeGroup" class="span10">
+							<option>All</option>
+							<option>Under 18</option>
+							<option>18 to 25 years</option>
+							<option>26 to 34 years</option>
+							<option>35 to 44 years</option>
+							<option>45 to 54 years</option>
+							<option>55 to 64 years</option>
+							<option>65+ years</option>
+						</select>
+
+						<label class="control-label" for="inputEducationLevel"><strong>Education Level</strong></label>
+						<select id="inputEducationLevel" class="span10">
+							<option>All</option>
+							<option>Less Than High School</option>
+							<option>High Schoool/GED</option>
+							<option>Some College</option>
+							<option>2 Year College Degree (Associates)</option>
+							<option>4 Year College Degree (BA, BS)</option>
+							<option>Master's Degree</option>
+							<option>Doctoral Degree</option>
+							<option>Professional Degree (MD, JD)</option>
+						</select>
+
+						<br/>
+						<br/>
+						<label><strong>Gender</strong></label>
+						<label class="checkbox inline"><input type="checkbox" name="cbFemale" id="cbFemale" value="Female" checked="true">Female</label>					           <label class="checkbox inline"><input type="checkbox" name="cbMale" id="cbMale" value="Male" checked="true">Male</label> 				  
+						<br/>
+						<br/>
+						<label><strong>Influence</strong></label>
+                                                <label class="checkbox inline"><input type="checkbox" name="cbInf" id="cbInf" value="Influencers" checked="true">Influencers</label>
+                                                <label class="checkbox"><input type="checkbox" name="cbNonInf" id="cbNonInf" value="Non Influencers" checked="true">Non-Influencers</label>     
+				           </fieldset>	
+                                       </form>				
+				  </div>
+			  </div>
+			</div>
+		  </div>
+
+		 <!-- Venue Filter -->
+		 <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseVenueFilter">
+				Venue Filters
+			  </a>
+			</div>
+			<div id="collapseVenueFilter" class="accordion-body collapse">
+			  <div class="accordion-inner">
+				<div>
+					<form>
+					  <fieldset>
+						<label><strong>Presence</strong></label>
+						
+						<label class="radio checkbox"><input type="checkbox" name="cbAtEvent" id="cbAtEvent" value="At Event" checked="true">At Event</label>
+						<label class="radio checkbox"><input type="checkbox" name="cbOnline" id="cbOnline" value="Online" checked="true">Online</label>					  
+						<br/>
+						<br/>
+						<label class="control-label" for="inputStage"><strong>Stage</strong></label>
+						<select id="inputStage" class="span8">
+							<option>All</option>
+							<option>Pavilion Stage</option>
+							<option>Festival Stage</option>
+							<option>Dance Forest</option>
+							<option>VIP</option>
+							<option>Brand Booths</option>
+							<option>Charity Row</option>
+							<option>Concessions</option>
+							<option>Other Attractions</option>
+							<option>Parking</option>
+						</select>
+
+						<label class="control-label" for="inputAct"><strong>State</strong></label>
+						<select id="inputAct" class="span8">
+							<option>All</option>
+							<option>Texas</option>
+							<option>Washington</option>
+							<option></option>
+						</select>
+
+					  </fieldset>
+					</form>				
+				  </div>
+			  </div>
+			</div>
+		  </div>
+
+		 <!-- Optional Settings Area -->
+		 <% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+			<% if(menuSection.name == "Settings") { %>
+		  <div class="accordion-group">
+			<div class="accordion-heading">
+			  <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+				Settings
+			  </a>
+			</div>
+			<div id="collapseThree" class="accordion-body collapse">
+			  <div class="accordion-inner">
+			    <label><strong>Select Theme</strong></label>
+                <span class="label label-inverse"><a class="theme-switch-default" href="#">Default</a></span>
+				<span class="label label-inverse"><a class="theme-switch-amelia" href="#">Amelia</a></span>
+				<span class="label label-inverse"><a class="theme-switch-cerulean" href="#">Cerulean</a></span>
+				<span class="label label-inverse"><a class="theme-switch-journal" href="#">Journal</a></span>
+				<span class="label label-inverse"><a class="theme-switch-readable" href="#">Readable</a></span>
+				<span class="label label-inverse"><a class="theme-switch-simplex" href="#">Simplex</a></span>
+				<span class="label label-inverse"><a class="theme-switch-slate" href="#">Slate</a></span>
+				<span class="label label-inverse"><a class="theme-switch-spacelab" href="#">Spacelab</a></span>
+				<span class="label label-inverse"><a class="theme-switch-spruce" href="#">Spruce</a></span>
+				<span class="label label-inverse"><a class="theme-switch-superhero" href="#">Superhero</a></span>
+				<span class="label label-inverse"><a class="theme-switch-united" href="#">United</a></span>
+
+			    <ul class="nav nav-list">
+					<li class="nav-header"><%= menuSection.name %></li>
+					<% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+					<li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						<a href="<%= menuItem.href %>">
+						<i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						</a>
+					</li>            
+     		       <% } %>
+				</ul>
+			  </div>
+			</div>
+		  </div>
+		<% } %>
+	  <% } %>
+		</div>
+
+      </div>
+    </div>
+    <!--/.well -->
+  </div>
+  <% }; %>
+  <!--/span-->
+
+  <!-- Bread Crumb Navigation -->
+  <div class="<%= showNavMenu ? "span10" : "span12" %>">
+    <div>
+		<% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+			<% if(menuSection.name == "Views") { %>
+				<ul class="nav nav-pills">
+				<% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+                                   <% if (menuItem.isActive) page = menuItem.name; %>
+					<li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						<a href="<%= menuItem.href %>"><%= menuItem.name %></a>
+					</li>
+				<% } %>
+				</ul>
+			<% } %>
+		<% } %>
+
+		<% if (showBreadcrumbs) { %>
+		<div>
+		  <ul class="breadcrumb">
+			<% for(var i = 0; i < breadcrumbs.length; i++) { var crumb = breadcrumbs[i]; %>
+			<% if (i == (breadcrumbs.length - 1)) { %>
+				<li class="active"><%= crumb.name %></li>
+			<% } else { %>
+			  <a href="<%= crumb.href %>"><%= crumb.name %></a>
+			  <span class="divider">/</span>
+			<% }; %>
+			<% }; %>
+		  </ul>
+		</div>
+		<% }; %>
+
+		<div>
+			<%- body %>
+		</div>
+	</div>
+
+  </div>
+  <!--/span-->
+
+</div>
+<!--/row-->
+
+  <footer>
+    <p>&copy; GraphSandbox.com 2013</p>
+    <span style="font-size:75%;"><%= title %></span>
+  </footer>
+
+<div id="box-config-modal" class="modal hide fade in" style="display: none;">
+    <div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>Adjust widget</h3>
+    </div>
+    <div class="modal-body">
+    <p>This part can be customized to set box content specifix settings!</p>
+    </div>
+    <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-dismiss="modal">Save Changes</a>
+    <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+</div>
+
+</div><!--/.fluid-container-->
+
+  </body>
+</html>

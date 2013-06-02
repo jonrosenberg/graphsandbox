@@ -1,0 +1,712 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<title><%= title %> @ <%= currentViewName %></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="datakids,data,kids,analysis,education,learning" />
+	<meta name="Robots" content="index, follow" />
+	<meta name="description" content="<%= description %>">
+	<meta name="author" content="<%= author %>">
+    
+    <!-- Favicon -->
+	<link rel="icon" type="image/png" href="favicon.png" />
+   
+
+	<link href="bootstrap/css/bootstrap.css" rel="stylesheet" id="main-theme-script">
+	<link href="css/themes/default.css" rel="stylesheet" id="theme-specific-script">
+	<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" id="Link1">
+
+        	<!-- Simplenso -->
+	<link href="css/simplenso.css" rel="stylesheet">
+
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+	<!-- Modernizer -->
+	<script type="text/javascript" src="scripts/d3/modernizr-2.5.3-respond-1.1.0.min.js"></script>  
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.core.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.widget.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified//jquery.ui.mouse.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.sortable.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.widget.min.js"></script>
+
+    <!-- jQuery UI Draggable & droppable -->
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.draggable.min.js"></script>
+    <script type="text/javascript" src="scripts/jquery-ui/ui/minified/jquery.ui.droppable.min.js"></script>
+
+    <!-- jQuery Cookie -->
+    <script type="text/javascript" src="scripts/jquery.cookie/jquery.cookie.js"></script>
+
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="scripts/bootbox/bootbox.min.js"></script>
+
+    <!-- Charting -->
+    <link rel="stylesheet" href="scripts/cirque/cirque.css" />
+    <link rel="stylesheet" href="css/charts/charting_application_simple.css" />
+
+
+	<!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="theme/style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="theme/css/select_color.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="theme/js/fancybox/jquery.fancybox-1.3.4.css" />
+    
+    <!-- Skin CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="theme/styles/Yellow-Orange/yellow-orange.css" class="changeme" />
+	
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="./theme/css/ie7.css" /><![endif]-->
+    <!--[if IE 8]><link rel="stylesheet" type="text/css" href="./theme/css/ie8.css" /><![endif]-->	
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="theme/js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="theme/js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="theme/js/jquery.cycle.all.js"></script>
+    <script type="text/javascript" src="theme/js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="theme/js/jquery.cookie.js"></script>
+
+    
+    <!-- Main JS -->
+    <script type="text/javascript" src="theme/js/main.js"></script> 
+    
+    <!-- COLOR NAVIGATOR -->
+	<script type="text/javascript">
+		var $j = jQuery.noConflict();
+		if($j.cookie("css")) {
+			$j("link.changeme").attr("href",$j.cookie("css"));
+		}
+		$j(document).ready(function() { 
+			$j("#nav li a").click(function() { 				
+				$j("link.changeme").attr("href",$j(this).attr('rel'));
+				$j.cookie("css",$j(this).attr('rel'), {expires: 365, path: '/'});
+				return false;
+			});
+		});
+	</script>
+
+    <style>
+    .pagination a
+    {
+        float: left;
+        padding: 0 8px;
+        line-height: 24px;
+    }
+    div.dataTables_info
+    {
+      padding-top: 3px;
+      font-size:90%;
+    }
+    div.dataTables_length
+    {
+        display:none;
+    }
+    .in 
+    {
+        width:auto;
+    }
+    .accordion-heading {
+        font-family: TOONISH,Georgia,"Times New Roman",Times,serif
+    }
+    </style>
+
+    <%- renderScriptsTags(scripts) %>
+
+    <!-- Base Portal Package -->
+    <script type="text/javascript" src="scripts/simplenso/simplenso2.js"></script>
+
+    <!-- Base Charting Package -->
+    <script type="text/javascript" src="scripts/charts/basecharts.js"></script>
+
+</head>
+<body id="dashboard">
+  <% console.log(user); %>
+  <% if (typeof user === "undefined") {  user = { displayName: 'Not Logged In', authenticated: false, role: 'Guest', projects:[1] }; } %>
+	
+    <div id="header">
+    <div class="wrap">
+    	
+        <h1><a href="home.html" title=""></a></h1>
+        
+        <div id="main-navigation">
+            <ul class="dd-menu">
+                <li class="current-menu-item"><a href="home.html" title="Home Page">Home</a></li>
+                <li>
+                   <a href="page-styles.html" title="Learn">Learn</a>
+                   <ul>
+                       <li><a href="gallery-2col.html" title="Gallery">Elements</a>
+                           <ul>
+                               <li><a href="#" title="Sub Item 1">Sub Item 1</a></li>
+                               <li><a href="#" title="Sub Item 2">Sub Item 2</a></li>
+                               <li><a href="#" title="Sub Item 3">Sub Item 3</a></li>
+                               <li><a href="#" title="Sub Item 4">Sub Item 4</a></li>
+                           </ul>
+                       </li>
+                       <li><a href="about-full.html" title="About Full">About Full</a></li>
+                       <li><a href="page-styles.html" title="Page Styles">Page Styles</a></li>
+                       <li><a href="404.html" title="Page Not Found">404</a></li>
+                   </ul>
+                </li>
+                <li> 
+                   <a href="gallery-2col.html" title="Gallery">Gallery</a>
+                   <ul>
+                       <li><a href="gallery-2col.html" title="">Gallery 2col</a></li>
+                       <li><a href="gallery-4col.html" title="">Gallery 4col</a></li>
+                       <li><a href="gallery-big-list.html" title="">Gallery big list</a></li>
+                   </ul>
+                </li>
+                <li> 
+                	<a href="blog-posts.html" title="Blog">Blog</a>
+                	<ul>
+                       <li><a href="blog-posts.html" title="Blog Posts">Blog Posts</a></li>
+                       <li><a href="single-post.html" title="Single Post">Single Post</a></li>
+                   </ul>
+                </li>
+                <li><a href="about.html" title="About Us Page">About</a></li>
+	          <% if (user.authenticated) { %>
+                <div class="btn-group pull-right" style="margin:0px;padding:0px;">
+                    <div style="display:inline-block;">
+			        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+			          <i class="icon-user"></i>
+			          <%= user.displayName %>
+			          <span class="caret"></span>
+			        </a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">View Profile</a></li>
+			          <% if (user.role == "Administrator") { %>
+			             <li><a href="#">Manage Site</a></li>
+			          <% } %>
+			          <li><a class="cookie-delete" href="#">Delete Cookies</a></li>
+			          <li><a href="#">Edit Settings</a></li>
+			          <li class="divider"></li>
+			          <li><a href="login.html">Logout</a></li>
+			        </ul>
+                    </div>
+		        </div>
+	        <% } else { %>
+		  <div class="btn-group pull-right">
+			<a class="btn" href="/login.html">Sign In</a>
+		  </div>
+	  <% } %>
+
+              <div class="nav-collapse">
+              </div><!--/.nav-collapse -->
+
+            </ul><!-- e\nd dd-menu -->
+                    
+            </div><!-- end main-navigation -->
+        
+    </div><!-- end wrap -->
+    </div><!-- end header -->
+    
+    <div class="container-fluid">
+
+    <div class="row-fluid">
+      <!-- Side Navigation -->
+      <% if (showNavMenu) { %>
+      <div class="span2">
+          <!-- Put a project picker on there -->
+            <div style="margin-top:4px;">
+              <form id="projectSelector" name="projectSelector" action="/selectProject" method="post">
+                <fieldset>
+                  <select name="selectedProjectId" id="selectedProjectId" class="span12" onChange="this.form.submit();">
+			        <% for (var i = 0; i < user.projects.length; i++) { var projectId = user.projects[i]; var project = projects[projectId]; %>
+				        <option<%= (selectedProjectId == project.id) ? " selected='true'" : "" %> value="<%= project.id %>"><%= project.name %></option>
+			        <% } %>
+                  </select>
+                </fieldset>
+              </form>				
+            </div>
+
+                <div class="sidebar-nav" style="padding-top:2px;">
+                  <div>	   
+		            <div class="accordion" id="accordion2">
+
+		            <!-- Optional Admin Filters -->
+		            <% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+			            <% if(menuSection.name == "Main") { %>
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+				            Admin
+			              </a>
+			            </div>
+			            <div id="collapseOne" class="accordion-body collapse">
+			              <div class="accordion-inner">
+			                <ul class="nav nav-list">
+					            <li class="nav-header"><%= menuSection.name %></li>
+					            <% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+					            <li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						            <a href="<%= menuItem.href %>">
+						            <i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						            </a>
+					            </li>            
+					            <% } %>
+				             </ul>
+			              </div>
+			            </div>
+		              </div>
+		            <% } %>
+		            <% } %>
+
+		            <!-- Optional Views, currently Disabled -->
+		             <% if(1 == 2) { %>
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseViews">
+				            Views
+			              </a>
+			            </div>
+			            <div id="collapseViews" class="accordion-body collapse in">
+			              <div class="accordion-inner">
+			                <ul class="nav nav-list">
+				              <% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+				  	            <% if(menuSection.name == "Views") { %>
+					              <li class="nav-header"><%= menuSection.name %></li>
+					              <% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+						            <li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						              <a href="<%= menuItem.href %>">
+							            <i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						              </a>
+						            </li>            
+					            <% } %>
+				              <% } %>
+				              <% } %>
+				            </ul>
+			              </div>
+			            </div>
+		              </div>
+		             <% } %>
+
+
+ 		              <!-- Who Filters-->
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDemographicFilter">
+				            Who?
+			              </a>
+			            </div>
+			            <div id="collapseDemographicFilter" class="accordion-body collapse">
+			              <div class="accordion-inner">
+				            <div>
+					            <form>
+					              <fieldset>
+						            <label class="control-label" for="inputAgeGroup"><strong>Ages</strong></label>
+						            <select id="inputAgeGroup" class="span10">
+							            <option>All</option>
+							            <option>Under 18</option>
+							            <option>18 to 25 years</option>
+							            <option>26 to 34 years</option>
+							            <option>35 to 44 years</option>
+							            <option>45 to 54 years</option>
+							            <option>55 to 64 years</option>
+							            <option>65+ years</option>
+						            </select>
+
+						            <label class="control-label" for="inputEducationLevel"><strong>Education Level</strong></label>
+						            <select id="inputEducationLevel" class="span10">
+							            <option>All</option>
+							            <option>Less Than High School</option>
+							            <option>High Schoool/GED</option>
+							            <option>Some College</option>
+							            <option>College Degree</option>
+						            </select>
+
+						            <br/>
+						            <br/>
+						            <label><strong>Gender</strong></label>
+						            <label class="checkbox inline"><input type="checkbox" name="cbFemale" id="cbFemale" value="Female" checked="true">Female</label>					           <label class="checkbox inline"><input type="checkbox" name="cbMale" id="cbMale" value="Male" checked="true">Male</label> 				  
+						            <br/>
+						            <br/>
+				                       </fieldset>	
+                                                   </form>				
+				              </div>
+			              </div>
+			            </div>
+		              </div>
+
+ 		              <!-- What -->
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseChannelFilter">
+				            What?
+			              </a>
+			            </div>
+			            <div id="collapseChannelFilter" class="accordion-body collapse">
+			              <div class="accordion-inner">
+				            <div>
+					            <form>
+					              <fieldset>
+						            <label><strong>What kind?</strong></label>
+						            <label class="checkbox"><input type="checkbox" value="">All</label>
+						            <label class="checkbox"><input type="checkbox" value="">Toys</label>
+						            <label class="checkbox"><input type="checkbox" value="">Movies</label>
+						            <label class="checkbox"><input type="checkbox" value="">Books</label>
+					              </fieldset>
+					            </form>				
+				              </div>
+			              </div>
+			            </div>
+		              </div>
+
+
+ 		              <!-- Date Filters -->
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseDateFilter">
+				            When?
+			              </a>
+			            </div>
+			            <div id="collapseDateFilter" class="accordion-body collapse in">
+			              <div class="accordion-inner">
+				            <div>
+					            <form>
+					              <fieldset>
+						            <label class="checkbox">
+							            <input type="checkbox"><strong>Start Date</strong>
+						            </label>
+						            <input type="text" placeholder="08/01/2012" class="span8">
+						            <select class="span8">
+							            <option>1:00 am</option>
+							            <option>2:00 am</option>
+							            <option>3:00 am</option>
+							            <option>4:00 am</option>
+							            <option>5:00 am</option>
+							            <option>6:00 am</option>
+							            <option>7:00 am</option>
+							            <option>8:00 am</option>
+							            <option>9:00 am</option>
+							            <option>10:00 am</option>
+							            <option>11:00 am</option>
+							            <option>12:00 am</option>
+							            <option>1:00 pm</option>
+							            <option>2:00 pm</option>
+							            <option>3:00 pm</option>
+							            <option>4:00 pm</option>
+							            <option>5:00 pm</option>
+							            <option>6:00 pm</option>
+							            <option>7:00 pm</option>
+							            <option>8:00 pm</option>
+							            <option>9:00 pm</option>
+							            <option>10:00 pm</option>
+							            <option>11:00 pm</option>
+							            <option>12:00 pm</option>
+						            </select>
+						
+						            <br/>
+						            <label class="checkbox">
+							            <input type="checkbox"><strong>End Date</strong>
+						            </label>
+						            <input type="text" placeholder="08/01/2012" class="span8">
+						            <select class="span8">
+							            <option>1:00 am</option>
+							            <option>2:00 am</option>
+							            <option>3:00 am</option>
+							            <option>4:00 am</option>
+							            <option>5:00 am</option>
+							            <option>6:00 am</option>
+							            <option>7:00 am</option>
+							            <option>8:00 am</option>
+							            <option>9:00 am</option>
+							            <option>10:00 am</option>
+							            <option>11:00 am</option>
+							            <option>12:00 am</option>
+							            <option>1:00 pm</option>
+							            <option>2:00 pm</option>
+							            <option>3:00 pm</option>
+							            <option>4:00 pm</option>
+							            <option>5:00 pm</option>
+							            <option>6:00 pm</option>
+							            <option>7:00 pm</option>
+							            <option>8:00 pm</option>
+							            <option>9:00 pm</option>
+							            <option>10:00 pm</option>
+							            <option>11:00 pm</option>
+							            <option>12:00 pm</option>
+						            </select>
+					              </fieldset>
+					            </form>				
+				              </div>
+			              </div>
+			            </div>
+		              </div>
+
+
+ 		              <!-- Where Filters -->
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseLocationFilter">
+				            Where?
+			              </a>
+			            </div>
+			            <div id="collapseLocationFilter" class="accordion-body collapse in">
+			              <div class="accordion-inner">
+				            <div>
+					            <form>
+					              <fieldset>
+						            <label class="checkbox">
+							            <input type="checkbox"><strong>By Country</strong>
+						            </label>
+						            <select class="span8">
+							            <option>All Countries</option>
+							            <option>United States</option>
+							            <option>Canada</option>
+							            <option>Mexico</option>
+						            </select>
+						
+						            <br/>
+						            <label class="checkbox">
+							            <input type="checkbox"><strong>By State</strong>
+						            </label>
+						            <input type="text" placeholder="08/01/2012" class="span8">
+						            <select class="span8">
+							            <option>All States</option>
+							            <option>CA</option>
+							            <option>TX</option>
+							            <option>WA</option>
+						            </select>
+					              </fieldset>
+					            </form>				
+				              </div>
+			              </div>
+			            </div>
+		              </div>
+
+
+		             <!-- Optional Settings Area -->
+		             <% for(var i = 0; i < navMenuItems.length; i++) { var menuSection = navMenuItems[i]; %>
+			            <% if(menuSection.name == "Settings") { %>
+		              <div class="accordion-group">
+			            <div class="accordion-heading">
+			              <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+				            Settings
+			              </a>
+			            </div>
+			            <div id="collapseThree" class="accordion-body collapse">
+			              <div class="accordion-inner">
+			                <label><strong>Select Theme</strong></label>
+                            <span class="label label-inverse"><a class="theme-switch-default" href="#">Default</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-amelia" href="#">Amelia</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-cerulean" href="#">Cerulean</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-journal" href="#">Journal</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-readable" href="#">Readable</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-simplex" href="#">Simplex</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-slate" href="#">Slate</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-spacelab" href="#">Spacelab</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-spruce" href="#">Spruce</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-superhero" href="#">Superhero</a></span>
+				            <span class="label label-inverse"><a class="theme-switch-united" href="#">United</a></span>
+
+			                <ul class="nav nav-list">
+					            <li class="nav-header"><%= menuSection.name %></li>
+					            <% for(var x = 0; x < menuSection.items.length; x++) { var menuItem = menuSection.items[x]; %>
+					            <li <%=  (menuItem.isActive ? "class='active'" : "") %> >
+						            <a href="<%= menuItem.href %>">
+						            <i class="<%= menuItem.icon %>"></i> <%= menuItem.name %>
+						            </a>
+					            </li>            
+     		                   <% } %>
+				            </ul>
+			              </div>
+			            </div>
+		              </div>
+		            <% } %>
+	              <% } %>
+		            </div>
+
+                  </div>
+                </div>
+                <!--/.well -->
+
+
+      </div>
+      <% }; %>
+      <!--/span-->
+
+      <div class="<%= showNavMenu ? "span10" : "span12" %>">
+        <div id="content" class="home">
+
+        <div id="slider">
+            <div class="wrap">
+         	
+                <div class="c-8">
+            	    <div id="big-slider">
+                        <div class="slider-mask"></div>
+                        <ul id="slider-items">
+                            <li>
+                                <img src="theme/assets/slider_asset__0000_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                            </li>
+                            <li> 
+                               <img src="theme/assets/slider_asset__0001_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                            </li>
+                            <li>
+                               <img src="theme/assets/slider_asset__0002_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                            </li>
+                            <li>
+                                <img src="theme/assets/slider_asset__0003_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                            </li>
+                              <li>
+                                <img src="theme/assets/slider_asset__0004_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                            </li>
+                        </ul>
+                    
+                        <!-- This list is populated by jQuery Cycle -->
+                        <div id="pagination-container">
+                            <span class="previous"></span>
+                            <span id="slider-pagination"></span>
+                            <span class="next"></span>
+                        </div>
+                    </div><!-- END big-slider -->
+                </div>
+            
+                <div class="c-4">
+                    <div id="cat-slider">
+                        <h2>OUR PROGRAM</h2>
+                        <span class="devider"></span>
+                        <div id="scroller">
+                               <ul>
+                                    <li><h3><a href="#" title="Infant">Discovery</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Exploration</a></h3>Lorem ipsum dolor sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Visualization</a></h3>Lorem ipsum dolor sit amet</li>
+                               </ul>
+                               <ul>
+                                    <li><h3><a href="#" title="Infant">Interactive Filtering</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Charts and Graphs</a></h3>Lorem ipsum dolor sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Linking Data</a></h3>Lorem ipsum dolor sit amet</li>
+                               </ul>
+                               <ul>
+                                    <li><h3><a href="#" title="Infant">Students</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Teachers</a></h3>Lorem ipsum dolor sit amet</li>
+                                    <li><h3><a href="#" title="Infant">Parents</a></h3>Lorem ipsum dolor sit amet</li>
+                               </ul>
+                        </div><!-- END scroller -->
+                    
+                        <span class="up-arrow" title="Next"></span>
+                        <span class="down-arrow" title="Previous"></span>
+                    
+            	    </div> <!-- end cat-slider -->
+                </div>
+               
+            </div><!-- end wrap -->
+        
+                    <div id="slider-bg"></div><!-- END slider-bg // ljulja, togodan, vepak // pronunced by my son Luka :) -->
+            
+            </div><!-- end slider-->
+
+    	
+            <div id="featured">
+            <div class="wrap">                             
+
+	                <div class="c-8">
+	                    <div class="page">
+                            <h2>LEARN WITH DATA NOW</h2>
+                            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
+                            <a class="read-more">Sign Up for Free<span class="circle-arrow"></span></a>
+                        </div>
+	                </div>
+	                <div class="c-4">
+		                <div class="widget widget-working-hours">
+		                    <!--<h3 class="widget-title">100% Free</h3>-->
+		                    <ul>
+		                        <li class="xclock"><span>Use data in classrooms</span><br /><strong><a class="read-more">Start a project<span class="circle-arrow"></span></a></strong></li>
+		                        <li><span class="devider"></span></li>
+		                        <li class="xclock"><span>Use data in classrooms</span><br /><strong><a class="read-more">Learn about data<span class="circle-arrow"></span></a></strong></li>
+		                    </ul>
+		               </div>
+	               </div>    
+
+            </div><!-- end wrap -->                  
+            </div><!-- END featured -->
+
+            <div id="container-middle">
+            <div class="wrap">
+        
+                    <div class="c-4">
+                        <h3>Data Playground</h3>
+                        <h4>Kids have fun learning about data</h4>
+                        <div class="mask">
+	                        <a title="" href="assets/slider_asset__0000_.jpg" rel="example_group">
+                        	    <span class="middle-frame-mask"></span>
+                        	    <img src="theme/assets/WhatWeDo1.jpg" alt="" title="" />
+                            </a>    
+                        </div>
+                        <p>Kids have access to a catalog of interesting data that is fun to discover, explore, and understand. We make it easy to visualize data through interactive charts and graphs.</p>
+                        <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                     </div>
+                 
+                     <div class="c-4">
+                        <h3>Collaborative Learning</h3>
+                        <h4>Teachers and students work in teams</h4>
+                        <div class="mask">
+	                          <a title="" href="assets/slider_asset__0001_.jpg" rel="example_group">
+	                      	    <span class="middle-frame-mask"></span>
+                        	    <img src="theme/assets/WhatWeDo2.jpg" alt="" title="" />
+                            </a> 
+                        </div>
+                        <p>Kids can work independently, with parents, or with each other on data project teams. Teams can optionally compete on data projects for fame and prizes.</p>
+                        <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                     </div>
+                 
+                     <div class="c-4">
+                        <h3>Analytical Thinking</h3>
+                        <h4>Kids gain critical thinking skills</h4>
+                        <div class="mask">
+                            <a title="" href="assets/slider_asset__0002_.jpg" rel="example_group">
+                        	    <span class="middle-frame-mask"></span>
+                        	    <img src="theme/assets/WhatWeDo3.jpg" alt="" title="" />
+                            </a> 
+                        </div>
+                        <p>Kids can a solid understanding of data and how to use it to make the best decisions using critical thinking to future challenges across many areas and career paths.</p>
+                        <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                     </div>
+                 
+            </div><!-- end wrap -->         
+            </div> <!-- end container-middle -->
+                
+        </div><!-- end content -->
+      </div>
+
+    </div>
+
+    <div id="footer">
+            
+        <div id="sub-footer" class="clearfix">            
+                    <p id="copyright">&copy; 2013 DataKid.com</p>
+                    <ul class="subfooter-menu">
+                        <li><a href="" title="">Terms &amp; Conditions</a></li>
+                        <li><a href="" title="">Copyrights</a></li>
+                        <li><a href="" title="">Site Map</a></li>
+                    </ul>
+                    
+        </div><!-- end sub-footer -->
+
+    </div><!-- end footer -->
+
+
+    <div id="box-config-modal" class="modal hide fade in" style="display: none;">
+        <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Adjust widget</h3>
+        </div>
+        <div class="modal-body">
+        <p>This part can be customized to set box content specifix settings!</p>
+        </div>
+        <div class="modal-footer">
+        <a href="#" class="btn btn-primary" data-dismiss="modal">Save Changes</a>
+        <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
+    </div>
+
+</div><!--/.fluid-container-->
+    
+</body>
+</html>

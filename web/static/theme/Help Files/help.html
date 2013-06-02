@@ -1,0 +1,289 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Template Documentation Template</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;Kids Voice School HTML Template&rdquo; Documentation by &ldquo;Aislin&rdquo; v1.0</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;Kids Voice School HTML Template&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 15.09.2011<br>
+					By: aislin<br>
+					Email: <a href="mailto:dubravka08@gmail.com">dubravka08@gmail.com</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file, please feel free to email via my user page contact form <a href="http://themeforest.net/user/Aislin" target="_blank">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+		<ol class="alpha">
+			<li><a href="#htmlStructure">HTML Structure</a></li>
+			<li><a href="#cssFiles">CSS Files and Structure</a></li>
+			<li><a href="#javascript">JavaScript</a></li>
+			<li><a href="#psdFiles">PSD Files</a></li>
+			<li><a href="#credits">Sources and Credits</a></li>
+		</ol>
+		
+		<hr>
+		
+		<h3 id="htmlStructure"><strong>A) HTML Structure</strong> - <a href="#toc">top</a></h3>
+		<p>This theme is a fixed layout with one column in home page and gallery page, and two columns in all other pages. All of the information within the main content area is nested within a div with an id of "bd", shortcut for body, and in section class "yui-g", this is YUI reset-fonts-grids structure. The general template structure is the same throughout the template. Here is the general structure for one column page.</p>
+		
+		<img src="assets/images/html-base-structure.jpg" alt="HTML Structure" />
+        
+        <br/>
+        <br/>
+        
+        <p>The two column page stucture with class "content", and class "sidebar" looks like this.</p>
+		
+        <img src="assets/images/html-page-structure.jpg" alt="HTML Structure" />
+        
+        <br/>
+        <br/>
+        
+		<p>If you want to change Logo image, just create image with max height: 68px and width as you like, and save as logo.png with transparent bg.</p>
+        
+        <p>All images, as plaseholders, are kept in folder assets so you can just save your images there with same names and dimensions and thay will automaticly appear on the page.</p>
+        
+        <p>If you want to insert more images in gallery its very important to include  " <span role="treeitem" aria-expanded="true">rel="<span collapsed="false">example_group</span>"</span> " in anchor tag, because if you dont include it will not work.</p>
+        
+    <p>To change contact information just open mail.php file and change recipient mail, place where mails will be sent.</p>
+        
+		<p>So, to ensure that your new styles are applied, make sure that they carry enough "weight" and that there isn't a style lower in the CSS file that is being applied after yours.</p> 
+
+		<hr>
+
+		<h3 id="cssFiles"><strong>B) CSS Files and Structure</strong> - <a href="#toc">top</a></h3>
+
+		<p>I'm using two CSS files in this theme.</p> 
+
+		<p>The first file style.css is a main stylesheet, and contains all of the specific stylings for the page. The file is separated into sections using:</p>  
+        
+<pre>
+/* ----->>> STRUCTURE <<<------ */
+        
+a{ 
+	cursor: pointer; 
+    text-decoration: none; 
+}
+</pre>
+
+Here you define main content width, and fixed layout in the middle:
+<pre>
+.wrap { /* helper - get together content */
+	width: 954px;
+	margin: 0 auto;
+	position:relative;
+	overflow:hidden;
+}
+
+#content {
+    overflow: hidden;
+    padding: 25px 0 80px;
+    position: relative;
+    z-index: 4;
+}
+</pre>
+
+Here you can change header image:
+<pre>
+body  {
+    background:url(&quot;images/header-bckgr.jpg&quot;) no-repeat scroll center top transparent;
+}
+</pre>
+
+Here you can change width of columns:
+<pre>
+.c-1  { width: 52px; }
+.c-2  { width: 134px; }
+.c-3  { width: 216px; }
+.c-4  { width: 298px; }
+.c-5  { width: 380px; }
+.c-6  { width: 462px; }
+.c-7  { width: 544px; }
+.c-8  { width: 626px; }
+.c-9  { width: 708px; }
+.c-10 { width: 790px; }
+.c-11 { width: 872px; }
+.c-12 { width: 954px; }	
+</pre>	
+
+
+
+        <p>The second file styles/color/color.css is a additional skin stylesheet, and contains all stylings for one color. This file depend on color which will be selected. There are 10 colors combinations. If you want to change color of your site you need to change path of css file in header. For example if you want green-blue  color combination you need to type:</p>
+<pre> styles/Yellow-Orange/yellow-orange.css</pre>
+        <p>instead of default skin css:</p>
+<pre> styles/Green-Blue/green-blue.css </pre>
+
+Here you can change background pattern:
+<pre>
+html{
+	   background:url(&quot;images/white-paper-bg.jpg&quot;) repeat scroll 0 0 transparent;
+}
+</pre>
+
+Here you can change slider mask pattern:
+<pre>
+.slider-mask{
+    background:url(&quot;images/slider-mask1.png&quot;) no-repeat scroll 0 0 transparent;
+}
+</pre>
+
+Here you can change any color. For example:
+<pre>
+.post h2 {
+	   color: #B8CB02;
+}
+</pre>
+
+	  <p>If you would like to edit a specific section of the site, simply find the appropriate label in the CSS file, and then scroll down until you find the appropriate style that needs to be edited.</p> 
+
+		<hr>
+		
+		<h3 id="javascript"><strong>C) JavaScript</strong> - <a href="#toc">top</a></h3>
+		
+		<p>This theme imports four Javascript files.</p>
+		
+		<ol>
+			<li>jQuery</li>
+			<li>Scrollable gallery</li>
+            <li>Zoom images</li>
+            <li>Drop down menu</li>
+		</ol>
+		  
+		<ol>
+			<li>jQuery is a Javascript library that greatly reduces the amount of code that you must write.</li>
+			<li>Main gallery on the home page is managed with jQuery Cycle Plugin. The settings for scrollable gallery is located in the main.js file
+              <pre>    //BIG SLIDER AT HOME PAGE<br>	$j(&quot;#big-slider&quot;).hover( function () {<br>			$j('ul#slider-items').cycle('pause');<br>		  }, <br>		  function () {<br>			  $j('ul#slider-items').cycle('resume');<br>	});<br>	<br>	//slider Items<br>	$j('ul#slider-items').cycle({<br>		//fx:     'fade', <br>		 fx:     'scrollDown,fade', <br>		    easing: 'easeOutBounce', <br>		    delay:  -4000,<br>	    next:   '.next',<br>	    prev:   '.previous',<br>	    pager:  '#slider-pagination',<br>	    pause:   1,<br>	    fit:     1,<br>	    height:  300,<br>	    // callback fn that creates a thumbnail to use as pager anchor <br>	    pagerAnchorBuilder: MLS_paginate<br>	});<br>	<br>	//Pagination related to main slider at home page<br>	function MLS_paginate(index, obj){<br>	    return '&lt;li&gt;&lt;a href=&quot;#&quot;&gt;' + (index+1) + '&lt;/a&gt;&lt;/li&gt;'; <br>	}<br>	<br>	<br>	//CATEGORY SCROLLER AT HOME PAGE<br>	$j(&quot;#scroller&quot;).cycle({<br>		fx:     'blindY', <br>		speed:   500, <br>		next:   '.down-arrow',<br>		prev:   '.up-arrow',<br>		pause:   1,<br>		timeout: 0<br>	});</pre>
+If you want to change the speed of transitions change the value in milisecundes 
+<pre>
+speed: 500
+</pre>
+
+			</li>
+			<li>Zoom effect for the images is managed with Fancybox jQuery plugin and all settings are also located in the main.js file. If you want to change the settings for effect, look for the following code in the main.js file:
+              <pre>	
+//ZOOM effect FancyBox	
+	$j("a[rel=example_group]").fancybox({
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'titlePosition' 	: 'over',
+		'titleFormat'		: function(title, currentArray, currentIndex, currentOpts) {
+			return '<span id="fancybox-title-over">Image ' + (currentIndex + 1) + ' / ' + currentArray.length + (title.length ? ' &nbsp; ' + title : '') + '</span>';
+		}
+	});	
+</pre>
+
+For updating the Fancybox effect please refer to the official Fancybox <a href="http://fancybox.net/">documentation</a>
+			</li>
+			<li>Drop down menu is managed with jQuery script in main.js file. You can find code in main.js fle:
+<pre>
+	// INITIALIZE DROPDOWN MENU
+	$j('.dd-menu li:has(ul) > a').addClass('dd-submenu-title').append('<span class="dd-arrow"></span>');	
+	$j('.dd-menu li').hover(function(){	
+			// HOVER IN HANDLER
+	
+			$j('ul:first', this).css({visibility: "visible",display: "none"}).slideDown(250);									
+			var path_set = $j(this).parents('.dd-menu li').find('a:first');
+			$j(path_set).addClass('dd-path');						
+			$j('.dd-menu li a.dd-path').not(path_set).removeClass('dd-path');
+			
+		},function(){			
+			// HOVER OUT HANDLER
+		
+			$j('ul:first', this).css({visibility: "hidden"});			
+	});
+	$j('.dd-menu').hover(function() {
+			// HOVER IN HANDLER
+			
+		}, function() {			
+			// HOVER OUT HANDLER
+		
+			$j('a.dd-path', this).removeClass('dd-path');			
+	});
+</pre>           
+            </li>            
+		</ol>
+		
+<hr>
+		
+		<h3 id="psdFiles"><strong>D) PSD Files</strong> - <a href="#toc">top</a></h3>
+		
+		<p>I've included 20 psds with this theme and they are all sliced:</p>
+		
+			<ol>
+                <li>Home page,</li>
+                <li>About full page,</li> 
+                <li>About page,</li>
+                <li>Blog page,</li>
+                <li>Contact page,</li>
+                <li>Post page,</li>
+                <li>Page Styles</li>
+                <li>Gallery 2col</li>
+                <li>Gallery 4col</li>
+                <li>Gallery Big List</li>
+				<li>Green-Blue Home page,</li>
+				<li>Grey-Red Home page,</li>
+				<li>Orange-Red Home page,</li>
+				<li>Pink-Grey Home page,</li>
+				<li>Purple-Brown Home page,</li>
+				<li>Turquise-Black Home page,</li>
+				<li>Turquise-Grey Home page,</li>
+				<li>Turquise-Orange Home page,</li>
+				<li>Yellow-Orange Home page,</li>
+				<li>Yellow-Purple Home page,</li>
+			</ol>
+		
+<p>If you'd like to change the main image in the header, open "header-bckgr.psd" in folder &quot;slicing&quot;, make the necessary adjustments, and then save the file as "header-bckgr.jpg". Do the same for all other elements that are include in folder &quot;slicing&quot; . All other files are sliced as well, for e.g. If you want to change bg-image for post image you just open thumb-post192x185.psd make necessary adjustments, and than save file as &quot;thumb-post192x185.png&quot;. You can do the same for all other pages. </p> 
+
+<hr>
+		
+		<h3 id="credits"><strong>E) Sources and Credits</strong> - <a href="#toc">top</a></h3>
+		
+		<p>I've used the following images, icons or other files as listed.
+		
+		<ul>
+			<li>Toonish its a free font ,Toonish font can be downloaded <a href="http://www.dafont.com/toonish.font">here</a></li> 
+            <li>Throw My Hands Up in the Air its a free font ,Throw My Hands Up in the Air font can be downloaded <a href="http://www.dafont.com/throw-my-hands-up-in-the-air.font">here</a></li> 
+            <li>Georgia (everything else)</li>
+            <li>Icons are created by me so they are free for commercial use.</li>
+            <li>Images are not included in psd files.</li>
+		</ul>
+		
+	  <hr>
+		
+		<p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes on ThemeForest, you might consider visiting the forums and asking your question in the "Item Discussion" section.</p> 
+		
+		<p class="append-bottom alt large"><strong>Aislin</strong></p>
+		<p><a href="#toc">Go To Table of Contents</a></p>
+		
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>

@@ -1,0 +1,3 @@
+View	Module	Type	Width	Row	Col	DataSource	Series1	Series2	Series3	Series4	Labels1	Labels2	Labels3	Labels4	Header	Footer	Config
+Demo	Audience by Origin	ChoroplethMap	12	1	1	[CountsByAgeGroup]	[data]				[label]						
+Demo	Age Breakdown	PieChart	6	2	1	[CountsByAgeGroup]	[data]				[label]						

@@ -1,0 +1,268 @@
+﻿sa<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+	<title>DataKid.com</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="Data exploration and education for kids" />
+	<meta name="keywords" content="datakids,data,kids,analysis,education,learning" />
+	<meta name="Robots" content="index, follow" />
+    
+    <!-- Favicon -->
+	<link rel="icon" type="image/png" href="favicon.png" />
+    
+	<!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/select_color.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="js/fancybox/jquery.fancybox-1.3.4.css" />
+    
+    <!-- Skin CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/Yellow-Orange/yellow-orange.css" class="changeme" />
+	
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="./css/ie7.css" /><![endif]-->
+    <!--[if IE 8]><link rel="stylesheet" type="text/css" href="./css/ie8.css" /><![endif]-->	
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.cycle.all.js"></script>
+    <script type="text/javascript" src="js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+
+    
+    <!-- Main JS -->
+    <script type="text/javascript" src="js/main.js"></script> 
+    
+    <!-- COLOR NAVIGATOR -->
+	<script type="text/javascript">
+		var $j = jQuery.noConflict();
+		if($j.cookie("css")) {
+			$j("link.changeme").attr("href",$j.cookie("css"));
+		}
+		$j(document).ready(function() { 
+			$j("#nav li a").click(function() { 				
+				$j("link.changeme").attr("href",$j(this).attr('rel'));
+				$j.cookie("css",$j(this).attr('rel'), {expires: 365, path: '/'});
+				return false;
+			});
+		});
+	</script>
+
+</head>
+<body>
+	
+    <div id="header">
+    		<ul id="nav">
+                <li><a class="Green-Blue" rel="styles/Green-Blue/green-blue.css" href="#"></a></li>
+                <li><a class="Grey-Red" rel="styles/Grey-Red/grey-red.css" href="#"></a></li>
+                <li><a class="Orange-Red" rel="styles/Orange-Red/orange-red.css" href="#"></a></li>
+                <li><a class="Pink-Grey" rel="styles/Pink-Grey/pink-grey.css" href="#"></a></li>
+                <li><a class="Purple-Brown" rel="styles/Purple-Brown/purple-brown.css" href="#"></a></li>
+                <li><a class="Turquise-Black" rel="styles/Turquise-Black/turquise-black.css" href="#"></a></li>
+                <li><a class="Turquise-Grey" rel="styles/Turquise-Grey/turquise-grey.css" href="#"></a></li>
+                <li><a class="Turquise-Orange" rel="styles/Turquise-Orange/turquise-orange.css" href="#"></a></li>
+                <li><a class="Yellow-Orange" rel="styles/Yellow-Orange/yellow-orange.css" href="#"></a></li>
+                <li><a class="Yellow-Purple" rel="styles/Yellow-Purple/yellow-purple.css" href="#"></a></li>
+            </ul>
+    <div class="wrap">
+    	
+        <h1><a href="home.html" title=""></a></h1>
+        
+        <div id="main-navigation">
+            <ul class="dd-menu">
+                <li class="current-menu-item"><a href="home.html" title="Home Page">Home</a></li>
+                <li>
+                   <a href="page-styles.html" title="Learn">Learn</a>
+                   <ul>
+                       <li><a href="gallery-2col.html" title="Gallery">Elements</a>
+                           <ul>
+                               <li><a href="#" title="Sub Item 1">Sub Item 1</a></li>
+                               <li><a href="#" title="Sub Item 2">Sub Item 2</a></li>
+                               <li><a href="#" title="Sub Item 3">Sub Item 3</a></li>
+                               <li><a href="#" title="Sub Item 4">Sub Item 4</a></li>
+                           </ul>
+                       </li>
+                       <li><a href="about-full.html" title="About Full">About Full</a></li>
+                       <li><a href="page-styles.html" title="Page Styles">Page Styles</a></li>
+                       <li><a href="404.html" title="Page Not Found">404</a></li>
+                   </ul>
+                </li>
+                <li> 
+                   <a href="gallery-2col.html" title="Gallery">Gallery</a>
+                   <ul>
+                       <li><a href="gallery-2col.html" title="">Gallery 2col</a></li>
+                       <li><a href="gallery-4col.html" title="">Gallery 4col</a></li>
+                       <li><a href="gallery-big-list.html" title="">Gallery big list</a></li>
+                   </ul>
+                </li>
+                <li> 
+                	<a href="blog-posts.html" title="Blog">Blog</a>
+                	<ul>
+                       <li><a href="blog-posts.html" title="Blog Posts">Blog Posts</a></li>
+                       <li><a href="single-post.html" title="Single Post">Single Post</a></li>
+                   </ul>
+                </li>
+                <li><a href="about.html" title="About Us Page">About</a></li>
+            </ul><!-- e\nd dd-menu -->
+                    
+            </div><!-- end main-navigation -->
+        
+    </div><!-- end wrap -->
+    </div><!-- end header -->
+    
+    <div id="content" class="home">
+    	
+        <div id="slider">
+        <div class="wrap">
+         	
+            <div class="c-8">
+            	<div id="big-slider">
+                    <div class="slider-mask"></div>
+                    <ul id="slider-items">
+                        <li>
+                            <img src="assets/slider_asset__0000_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                        </li>
+                        <li> 
+                           <img src="assets/slider_asset__0001_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                        </li>
+                        <li>
+                           <img src="assets/slider_asset__0002_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                        </li>
+                        <li>
+                            <img src="assets/slider_asset__0003_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                        </li>
+                          <li>
+                            <img src="assets/slider_asset__0004_.jpg" width="650" height="293" alt="Slider Image" title="" />
+                        </li>
+                    </ul>
+                    
+                    <!-- This list is populated by jQuery Cycle -->
+                    <div id="pagination-container">
+                        <span class="previous"></span>
+                        <span id="slider-pagination"></span>
+                        <span class="next"></span>
+                    </div>
+                </div><!-- END big-slider -->
+            </div>
+            
+            <div class="c-4">
+                <div id="cat-slider">
+                    <h2>OUR PROGRAM</h2>
+                    <span class="devider"></span>
+                    <div id="scroller">
+                           <ul>
+                                <li><h3><a href="#" title="Infant">Discovery</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                <li><h3><a href="#" title="Infant">Exploration</a></h3>Lorem ipsum dolor sit amet</li>
+                                <li><h3><a href="#" title="Infant">Visualization</a></h3>Lorem ipsum dolor sit amet</li>
+                           </ul>
+                           <ul>
+                                <li><h3><a href="#" title="Infant">Interactive Filtering</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                <li><h3><a href="#" title="Infant">Charts and Graphs</a></h3>Lorem ipsum dolor sit amet</li>
+                                <li><h3><a href="#" title="Infant">Linking Data</a></h3>Lorem ipsum dolor sit amet</li>
+                           </ul>
+                           <ul>
+                                <li><h3><a href="#" title="Infant">Students</a></h3>Lorem ipsum dolor sit amet sit amet</li>
+                                <li><h3><a href="#" title="Infant">Teachers</a></h3>Lorem ipsum dolor sit amet</li>
+                                <li><h3><a href="#" title="Infant">Parents</a></h3>Lorem ipsum dolor sit amet</li>
+                           </ul>
+                    </div><!-- END scroller -->
+                    
+                    <span class="up-arrow" title="Next"></span>
+                    <span class="down-arrow" title="Previous"></span>
+                    
+            	</div> <!-- end cat-slider -->
+            </div>
+               
+        </div><!-- end wrap -->
+        
+                <div id="slider-bg"></div><!-- END slider-bg // ljulja, togodan, vepak // pronunced by my son Luka :) -->
+            
+        </div><!-- end slider-->
+        
+        <div id="featured">
+        <div class="wrap">
+               
+	            <div class="c-8">
+	                <div class="page">
+                        <h2>LEARN WITH DATA NOW</h2>
+                        <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?</p>
+                        <a class="read-more">Sign Up for Free<span class="circle-arrow"></span></a>
+                    </div>
+	            </div>
+	            <div class="c-4">
+		            <div class="widget widget-working-hours">
+		                <!--<h3 class="widget-title">100% Free</h3>-->
+		                <ul>
+		                    <li class="xclock"><span>Use data in classrooms</span><br /><strong><a class="read-more">Start a project<span class="circle-arrow"></span></a></strong></li>
+		                    <li><span class="devider"></span></li>
+		                    <li class="xclock"><span>Use data in classrooms</span><br /><strong><a class="read-more">Learn about data<span class="circle-arrow"></span></a></strong></li>
+		                </ul>
+		           </div>
+	           </div>    
+               
+        </div><!-- end wrap -->                  
+        </div><!-- END featured -->
+        
+        <div id="container-middle">
+        <div class="wrap">
+        
+                <div class="c-4">
+                    <h3>Data Playground</h3>
+                    <h4>Kids have fun learning about data</h4>
+                    <div class="mask">
+	                    <a title="" href="assets/slider_asset__0000_.jpg" rel="example_group">
+                        	<span class="middle-frame-mask"></span>
+                        	<img src="assets/WhatWeDo1.jpg" alt="" title="" />
+                        </a>    
+                    </div>
+                    <p>Kids have access to a catalog of interesting data that is fun to discover, explore, and understand. We make it easy to visualize data through interactive charts and graphs.</p>
+                    <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                 </div>
+                 
+                 <div class="c-4">
+                    <h3>Collaborative Learning</h3>
+                    <h4>Teachers and students work in teams</h4>
+                    <div class="mask">
+	                      <a title="" href="assets/slider_asset__0001_.jpg" rel="example_group">
+	                      	<span class="middle-frame-mask"></span>
+                        	<img src="assets/WhatWeDo2.jpg" alt="" title="" />
+                        </a> 
+                    </div>
+                    <p>Kids can work independently, with parents, or with each other on data project teams. Teams can optionally compete on data projects for fame and prizes.</p>
+                    <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                 </div>
+                 
+                 <div class="c-4">
+                    <h3>Analytical Thinking</h3>
+                    <h4>Kids gain critical thinking skills</h4>
+                    <div class="mask">
+                        <a title="" href="assets/slider_asset__0002_.jpg" rel="example_group">
+                        	<span class="middle-frame-mask"></span>
+                        	<img src="assets/WhatWeDo3.jpg" alt="" title="" />
+                        </a> 
+                    </div>
+                    <p>Kids can a solid understanding of data and how to use it to make the best decisions using critical thinking to future challenges across many areas and career paths.</p>
+                    <a class="read-more">Read More<span class="circle-arrow"></span></a>
+                 </div>
+                 
+        </div><!-- end wrap -->         
+        </div> <!-- end container-middle -->
+        
+    </div><!-- end content -->
+    
+    <div id="footer">
+            
+        <div id="sub-footer" class="clearfix">            
+                    <p id="copyright">&copy; 2013 DataKid.com</p>
+                    <ul class="subfooter-menu">
+                        <li><a href="" title="">Terms &amp; Conditions</a></li>
+                        <li><a href="" title="">Copyrights</a></li>
+                        <li><a href="" title="">Site Map</a></li>
+                    </ul>
+                    
+        </div><!-- end sub-footer -->
+
+    </div><!-- end footer -->
+    
+</body>
+</html>

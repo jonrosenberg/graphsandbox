@@ -1,0 +1,73 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>Coming soon - GraphSandbox</title>
+<meta name="description" content="GraphSandbox Data Portal for Kids">
+<meta name="author" content="Scott Beaudreau with Jon Rosenberg">
+<meta http-equiv="Content-type" value="text/html; charset=utf-8">
+<meta name="title" content="GraphSandbox Data Portal for Kids">
+<link rel="stylesheet" href="css/register.css">
+<link href="http://fonts.googleapis.com/css?family=Droid+Sans|Arvo" rel="stylesheet" type="text/css">
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12419856-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+<% var backgroundImage = ((lastAction == "registerForLaunch") && (email != "")) ? "backgroundImage10.jpg" : "backgroundImage10.jpg"; %>
+<img src="images/register/<%= backgroundImage %>" class="bg">
+<div id="container">
+  <img src="img/datakid_logo.png" style="vertical-align:middle;" alt="DataKid" title="DataKid">
+  <div id="content">
+    <div>
+      <!--<img src="img/datakid_logo.png" style="vertical-align:middle;float:right;" alt="Graph Sandbox" title="Graph Sandbox" width="75" height="75">-->
+      <span id="makea" style="padding:0px;margin:0px;vertical-align:middle;"><p>Big Data for Kids</p></span>
+    </div>
+
+    <% if (lastAction == "registerForLaunch") { %>
+    <div id="description">Thank You. We will notify you when we're ready for launch at <b><%= email %></b>.</div>
+    <% } %>
+
+    <% if (lastAction != "registerForLaunch") { %>
+    <div id="description">Sign up to get notified when we launch!</div>
+    <% } %>
+
+    <div id="actionbox">
+      <div class="pages" id="pagestart">
+	<div id="emailbox">
+	  <p id="formerr"></p>
+
+          <% if (lastAction != "registerForLaunch") { %>
+	  <form id="signupform" action="/registerForLaunch" method="post">
+	    <div>
+	      <input type="text" id="email" name="email" autocorrect="off" autocapitalize="off" data-initial="your@email.com" value="your@email.com">
+	      <input type="image" style="vertical-align: middle;" name="submit" id="submit" src="images/register/Submit-Button.png">
+	    </div>
+	  </form>
+          <% } %>
+
+	  <div class="clear"></div>
+	</div>
+	<p id="learnmore" style="font-size:11px">powered by <a id="logolink" href="http://cognovus.com" alt="Cognovus" target="_new">Cognovus</a></p>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+</div>
+
+</body>
+</html>
+

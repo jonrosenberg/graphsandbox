@@ -1,0 +1,656 @@
+<% scripts.push("scripts/google-jsapi/jsapi.js", "scripts/flot/jquery.flot.js", "scripts/flot/jquery.flot.pie.js", "scripts/flot/jquery.flot.tooltip.min.js", "scripts/flot/jquery.flot.resize.js", "scripts/jquery-sparklines/jquery.sparkline.min.js", "scripts/charts/chartmanager.js", "js/underscore-min.js", "scripts/d3/d3.v3.min.js") %>
+<!--http://www.google.com/jsapi"-->
+
+
+<% currentViewKey = currentViewName.toLowerCase().replace(/\ /g, ""); %>
+<% var views = dashboard.views; %>
+<% var view = {}; %>
+<% for (var viewName in views) {  %>
+<%    var viewKey = viewName.toLowerCase().replace(/\ /g, ""); %>
+<%    if (viewKey == currentViewKey) view = views[viewName]; %>
+<% } %>
+<% var modules = view ? view["Modules"] : {}; %>
+<% var gridRows = []; %>
+<% for (var moduleName in modules) {  %>
+<%    var module = modules[moduleName]; %>
+<%    var moduleRow = module.Row; %>
+<%    var moduleCol = module.Col; %>
+<%    gridRows[moduleRow] = gridRows[moduleRow] || []; %>
+<%    gridRows[moduleRow][moduleCol] = module; %>
+<% } %>
+
+
+<% for (var row in gridRows) {  %>
+
+<div class="row-fluid" id="row<%= row %>">
+
+<%    for (var col in gridRows[row]) {  %>                                    
+<%       var module = gridRows[row][col]; %>
+<%       var moduleName = module.Name; %>
+<%       var moduleType = (module.Type  || "").trim(); %>
+<%       var moduleId = module.ID; %>
+<%       var moduleRow = module.Row; %>
+<%       var moduleCol = module.Col; %>
+<%       var moduleWidth = module.Width; %>
+<%       var vm = dashboard.GetViewModel(currentViewName, moduleName) %>
+
+<%       var header = vm ? vm.header : ""; %>
+<%       var footer = vm ? vm.footer : ""; %>
+<%       console.log("Module: %s Type: %s", moduleName, moduleType); %>
+                                        
+   <div class="span<%= moduleWidth %> column ui-sortable" id="col<%= col %>">
+      <div class="box" id="<%= moduleId + "_frame" %>">
+         <h4 class="box-header round-top">
+            <%= moduleName %>
+            <a class="box-btn" title="close"><i class="icon-remove"></i></a>
+            <a class="box-btn" title="toggle"><i class="icon-minus"></i></a>
+            <a class="box-btn" title="config" data-toggle="modal" href="#box-config-modal"><i class="icon-cog"></i></a>
+         </h4>
+         <div class="box-container-toggle">
+            <% if (header) { %>
+               <div class="row-fluid"><div class="span12"><p style="margin:8px;"><%- header %></p></div></div>
+            <% } %>                          
+            <div class="row-fluid">
+            <div class="box-content">
+
+<%    if (vm && (moduleType == 'Image') && vm.images) { %>
+                <!-- This about Filmstrip, Coverflow, and a simple Horizontal Stack of images -->
+                <!-- This about decorators on the border like a polaroid or a drop shadow -->
+                <!-- This about transforms, tilts, rotations, etc. to make it look cool -->
+                <!-- Think about an Image Viewer with a tiny filmstrip and a large image that is current -->
+				<link rel="stylesheet" href="http://blueimp.github.com/Bootstrap-Image-Gallery/css/bootstrap-image-gallery.min.css">
+				<div id="gallery" data-toggle="modal-gallery" data-target="#modal-gallery" <% if (vm.images.length == 1) { %>style="text-align:center;" <% } %>>
+					<!-- put images here -->
+			         <% for (var j = 0; j < vm.images.length; j++) { %>
+						<% var image = vm.images[j]; %>
+						<% if (image) { %>
+							<% if (image.href) { %>
+								<a href="<%= image.href %>" title="<%= image.text ? image.text : "" %>" rel="gallery">
+							<% } %>	
+							<img src="<%= image.image %>" <% if (image.height) { %> height='<%= image.height %>' <% } %> <% if (image.width) { %> width='<%= image.width %>' <% } %>> 
+							<% if (image.href) { %>
+								</a>
+							<% } %>	
+						<% } %>
+					 <% } %>					
+				</div>
+<%    } %>
+
+
+<%       if (vm && moduleType == 'Answer') { %>
+<%          var dominantImage = (vm.lines.length > 0) ? vm.lines[0].image : null; %>
+<%          var headerGroups = []; %>
+<%          for (var i in vm.lines) { %>
+<%             var line = vm.lines[i]; %>
+<%             var h = line.header || ""; %>
+<%             //if (!line.image || (line.image != dominantImage)) (headers[h] || (headers[h] = [])).push(vm.lines[i]); %>
+<%             if (!line.image) { %>
+<%                if (!(h in headerGroups)) headerGroups[h] = [];  %>
+<%                headerGroups[h].push(vm.lines[i]); %>
+<%             } %>
+<%          } %>
+                                                  
+               <div class="ansC">
+                  <div class="ans">
+                     <div class="wpc_tp">
+                        <div class="wpc_module sb_meta" style="min-height:225px;">
+                           <div class="infocard">
+                              <div class="infocardTop">
+                                 <% if (dominantImage) { %>
+                                 <div class="iclc">
+                                    <div style="width:200px;height:200px;float:left;margin-right:10px;margin-top:5px;" class="cico" >
+                                       <a href="#"><img width="200" height="200" id="c0" style="visibility: visible;" alt="<%= header %>" title="<%= header %>" src="<%= dominantImage %>" /></a>
+                                    </div>
+                                 </div>
+                                 <% } %>
+                              </div>
+                              <div class="wpc_facts">
+                              <% for (var h in headerGroups) { %>
+                                 <% var headerLines = headerGroups[h]; %>
+                                 <% if (headerLines && (headerLines.length > 1)) { %>
+                                    <p class="ppad" style="margin-bottom:0px;margin-left:40px;"><b><%- h %>:</b>&nbsp;<span dir="" class="cbl"></span>
+                                       <ul style="display:block;list-style-type:none;">                                             
+                                          <% for (var i in headerLines) { %>
+                                             <li style="margin-left:24px;">&bull;&nbsp;<%- headerLines[i].text %></li>
+                                          <% } %>
+                                       </ul>
+                                    </p>
+                                 <% } %>                                          
+
+                                 <% if ((headerLines.length == 1) && (headerLines[0])) { %>
+
+                                 <!-- if (headerLines && (headerLines.length <= 1)) {  -->
+
+                                    <p class="ppad">
+                                    <% if (h && h.length > 0) { %><b><%- h %>:</b>&nbsp;<% } %>
+                                    <% if (headerLines.length == 1) { %>
+                                        <span dir="" class="cbl"><%- headerLines[0].text %></span>
+                                    <% } %>
+                                    </p>
+                                 <% } %>                                          
+                              <% } %>                                                
+                              </div>
+                           </div>
+                        </div>
+                        <div class="wpc_module">
+                        </div>
+                     </div>
+                  </div>
+               </div>                
+<%    } %>
+                                        
+
+<%    if (vm && moduleType == 'Metric') { %>
+<%       console.log("Entering the Metric module"); %>                                      
+<%       console.log("VM: %s", JSON.stringify(vm)); %>                                      
+<%       var maxPerRow = 3; var bestSpanSize = Math.floor(12 / Math.max(1, maxPerRow));  %>
+<%       var n = (vm && vm.metrics && vm.metrics.length) ? vm.metrics.length : 0; %>
+<%       var nRows = Math.ceil(n / maxPerRow); %>
+         <% for (var i = 0; i < nRows; i++) { %>
+         <%    var rowId = moduleId + "_" + i; %>
+			<div id="<%= rowId %>" class="row" style="margin:0px;">
+				<ul>
+		         <% for (var j = 0; j < n; j++) { %>
+					<li style="margin-bottom:0px;margin-top:20px;list-style:none;">
+						<% var metric = vm.metrics[j]; %>
+						<% if (metric.category) { %>
+							<span style="display:inline-block;font-size:16px;font-family:calibri;"><%= metric.category %></span><br/>
+						<% } %>
+						<span style="display:inline-block;font-size:40px;font-family:calibri;margin-top:8px;"><%= metric.formattedValue %></span>
+						<% if (metric.unit) { %>
+							<span style="display:inline-block;font-size:12px;margin-left:4px;"><%= metric.unit %></span>
+						<% } %>
+						<% if (metric.percent) { %>
+							<span><p style="display:inline-block;font-size:10px;margin-left:4px;color:<%= (metric.percent >= 0) ? 'green' : 'red' %>;"><%= metric.formattedChange %></p></span> 
+						<% } %>
+						<% if (metric.percent) { %>
+						<% } %>
+					</li>
+				 <% } %>
+				</ul>
+			</div>
+         <% } %>
+<%    } %>
+
+
+<%    if (vm && moduleType == 'GaugeSet') { %>
+<%       console.log("Entering the GaugeSet"); %>                                      
+<%       console.log("VM: %s", JSON.stringify(vm)); %>                                      
+<%       var maxPerRow = 3; var bestSpanSize = Math.floor(12 / Math.max(1, maxPerRow));  %>
+<%       var n = (vm && vm.gauges && vm.gauges.length) ? vm.gauges.length : 0; %>
+<%       var nRows = Math.ceil(n / maxPerRow); %>
+         <% for (var i = 0; i < nRows; i++) { %>
+         <%    var rowId = moduleId + "_" + i; %>
+      	    <div id="<%= rowId %>" class="row" style="margin:0px;"></div>
+         <% } %>
+            
+            <script type="text/javascript" src="scripts/charts/d3gauge.js"></script>
+            <script> 
+               var vm = <%- JSON.stringify(vm) %>;
+               var gaugeRows = [];
+               function initialize()
+               {
+                  <% for (var i = 0; i < nRows; i++) { %>
+                     <% var n1 = i * maxPerRow; var n2 = n1 + maxPerRow; n2 = Math.min(n2, n); var rowId = moduleId + "_" + i; %>
+                     var gaugeRow = new GaugeSet("#<%= rowId %>");
+                     gaugeRows.push(gaugeRow.createGauges(vm.gauges.slice(<%= n1 %>, <%= n2 %>), <%= bestSpanSize %> )); 
+                  <% } %>
+               }
+               $(function(){ initialize(); }());	
+	    </script>
+<%    } %>
+
+
+<%    if (vm && moduleType == 'KPISummary') { %>
+               <div class="ansC">
+                  <div class="ans">
+                     <div class="wpc_tp">
+                        <div class="wpc_module sb_meta" style="min-height:110px;">
+                           <div class="infocard">
+                              <div class="wpc_facts">
+                                 <% for (var i = 0; i < vm.lines.length; i++) { %>
+                                 <% var line = vm.lines[i]; %>
+                                    <p class="ppad" style="margin-bottom:0px;">
+                                       <% if (line.icon) { %><i class="<%= line.icon %>"></i>&nbsp;<% } %>
+                                       <span dir="" class="cbl">
+                                          <%- line.text %>
+                                          <% if (line.sparkline && line.sparkline.values && (line.sparkline.values.length > 0)) { %>
+                                            &nbsp;<span id='<%= line.id %>' class='sparklines sparkline<%= line.sparkline.type %>' values='<%= line.sparkline.values.join(',') %>'></span>
+                                          <% } %>
+                                       </span>
+                                    </p>
+                                 <% } %>                                         
+                              </div>
+                           </div>
+                        </div>
+                        <div class="wpc_module"></div>
+                     </div>
+                  </div>
+                    <script>
+                        $(function() {
+                            function renderSparklines_<%= moduleId %>()
+                            {
+                                var searchpath = false;
+                                var format = '<span style="color: {{color}}">&#9679;</span> {{prefix}}{{y}}{{suffix}} at x = {{x}}</span>';
+                                <% for (var i = 0; i < vm.lines.length; i++) { var line = vm.lines[i]; %>
+                                    <% if (line.sparkline) { %>
+                                        <% if (line.sparkline.type == 'line') { %>var searchpath = "#<%= line.id %>.sparklineline"; var sparklineOptions = {enableTagOptions: true, type: 'line', fillColor: false, minSpotColor: false, maxSpotColor: false, height:'12px', tooltipChartTitle:'<u>Live Factor Trending</u><br/><br/>', tooltipPrefix: 'Rank: ', tooltipSuffix: ' Points', tooltipFormat: format}; <% } %>
+                                        <% if (line.sparkline.type == 'box') { %>var searchpath = "#<%= line.id %>.sparklinebox"; var sparklineOptions = {enableTagOptions: true, type: 'box',          height:'12px', raw:true,tooltipChartTitle:'<u>Live Factor Trending</u><br/><br/>', tooltipPrefix: 'Rank: ', tooltipSuffix: ' Points'}; <% } %>
+                                        <% if (line.sparkline.type == 'bar') { %>var searchpath = "#<%= line.id %>.sparklinebar"; var sparklineOptions = {enableTagOptions: true, type: 'bar',          height:'12px', tooltipChartTitle:'<u>Live Factor Trending</u><br/><br/>', tooltipPrefix: 'Rank: ', tooltipSuffix: ' Points'}; <% } %>
+                                        <% if (line.sparkline.type == 'bullet') { %>var searchpath = "#<%= line.id %>.sparklinebullet"; var sparklineOptions = {enableTagOptions: true, type: 'bullet', height:'12px', tooltipChartTitle:'<u>Performance</u><br/><br/>', tooltipPrefix: 'Achievement: ', tooltipSuffix: '%'}; <% } %>
+                                        <% if (line.sparkline.type == 'pie') { %>var searchpath = "#<%= line.id %>.sparklinepie"; var sparklineOptions = {enableTagOptions: true, type: 'pie',          height:'14px', tooltipChartTitle:'<u>Breakdown by Network</u><br/><br/>', tooltipPrefix: 'Rank: ', tooltipSuffix: ' Points'}; <% } %>
+                                        if (searchpath) { var jel=$(searchpath); if (jel) jel.sparkline("html", sparklineOptions); }
+                                    <% } %>
+                                <% } %>
+                            };
+                            renderSparklines_<%= moduleId %>();
+                            //setTimeout(function() { renderSparklines_<%= moduleId %>();}, 0);
+                        }());
+                    </script>                                                                                                    
+
+               </div>
+<%    } %>
+
+
+<%    if (vm && moduleType == 'Table') { %>
+			    <!-- Data Tables -->
+			    <script type="text/javascript" src="scripts/DataTables/media/js/jquery.dataTables.js"></script>
+               <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered bootstrap-datatable" id="<%= moduleId + "_table" %>">
+                  <thead>
+                     <tr>
+                        <% for (var i = 0; i < vm.table.fields.length; i++) { %><th><%= vm.table.fields[i] %></th><% } %>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <% for (var i = 0; i < vm.table.rows.length; i++) { %>
+                     <tr>
+                        <% for (var j = 0; j < vm.table.fields.length; j++) { %>
+                        <td><%= vm.table.rows[i][j] %></td>
+                        <% } %>
+                     </tr>
+                     <% } %>
+                  </tbody>
+               </table>
+<%    } %>
+
+
+<%    if (moduleType == 'ClusterGraph') { %>
+
+               <div class="well well-small lc-well-toolbar lc-lonely-buttons" style="margin:-10px -10px 0px -10px;padding:1px;">
+                  <div id="lc-cn-type" class="lc-well-toolbar-block">
+                     <div id="lc-type" data-toggle="buttons-radio">
+                        <button id="lc-type-bubble" class="btn btn-mini active"><i class="charticon-bubble"></i><br/>Bubble</button>
+                        <button id="lc-type-force" class="btn btn-mini"><i class="charticon-force"></i><br/>Force</button>
+                        <button id="lc-type-pack" class="btn btn-mini"><i class="charticon-pack"></i><br/>Pack</button>
+                        <button id="lc-type-sun" class="btn btn-mini"><i class="charticon-sun"></i><br/>Sun</button>
+                        <button id="lc-type-map" class="btn btn-mini"><i class="charticon-map"></i><br/>Map</button>
+                        <button id="lc-type-list" class="btn btn-mini"><i class="charticon-list"></i><br/>List</button>
+                        <button id="lc-type-cloud" class="btn btn-mini"><i class="charticon-cloud"></i><br/>Cloud</button>
+                        <button id="lc-type-stream" class="btn btn-mini"><i class="charticon-stream"></i><br/>Stream</button>
+                     </div>
+                  </div>
+               </div>
+               <div id="lc-mainchart" class="lc-altwell" style="display:none;"></div>
+               <script type="text/javascript" src="scripts/d3/clusterdemo_dev.js"></script>
+               <script type="text/javascript" src="/data/shared/datasets/clusterdemo/clusterdemo_data.js"></script>
+<%       } %>
+
+<%    if (vm && moduleType == 'CirqueChartSet') { %>
+
+            <div class="cirque-stats">
+               <div class="ui-cirque" data-value="2875" data-total="3245" data-arc-color="#4074AA" data-label="ratio" style="margin:2px;"></div>
+               <div class="ui-cirque" data-value="13" data-arc-color="#BBBBBB" style="margin:2px;"></div>
+               <div class="ui-cirque" data-value="63" data-total="225" data-arc-color="#2790B0" data-label="ratio" style="margin:2px;"></div>
+               <div class="ui-cirque" data-value="40" data-arc-color="#999999" style="margin:2px;"></div>
+            </div>
+            <!-- These do not require FLOT -->
+            <script type="text/javascript" src="scripts/cirque/cirque.js"></script>
+            <script type="text/javascript" src="scripts/charts/cirque.js"></script>
+<%       } %>
+
+
+<%    if (vm && moduleType == 'TimeSeriesLineChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+               $(function ()
+               {
+                  var vm = <%- JSON.stringify(vm) %>;
+                  if (vm)
+                  {
+					  var cm = new ChartManager();
+                     cm.RenderLineChart('#<%= moduleId + "_chart" %>', vm, { xaxis: { type: "date" }, yaxis: {type: "integer" } } );
+                  }
+               }());
+            </script>              
+<%       } %>
+
+
+<%    if (vm && moduleType == 'LineChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+               $(function ()
+               {
+                  var vm = <%- JSON.stringify(vm) %>;
+                  if (vm)
+                  {
+                     var cm = new ChartManager();
+                     cm.RenderLineChart('#<%= moduleId + "_chart" %>', vm);
+                  }
+               }());
+            </script>              
+<%       } %>
+
+
+<%    if (vm && moduleType == 'HorizontalBarChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+                $(function() 
+                {
+                    var vm = <%- JSON.stringify(vm) %>;
+                    if (vm)
+                    {
+                        var cm = new ChartManager();
+                        cm.RenderHorizontalBarChart('#<%= moduleId + "_chart" %>', vm);
+                    }
+                }());
+            </script> 
+<%       } %>
+
+
+<%    if (vm && moduleType == 'PieChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+               $(function ()
+               {
+                  var vm = <%- JSON.stringify(vm) %>;
+                  if (vm) {
+                     var cm = new ChartManager();
+                     cm.RenderPieChart('#<%= moduleId + "_chart" %>', vm);
+                  }
+               }());
+            </script>
+<%       } %>
+
+
+<%    if (vm && moduleType == 'DonutChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+                $(function ()
+                {
+                    var vm = <%- JSON.stringify(vm) %>;
+                    if (vm) {
+                        var cm = new ChartManager();
+                        cm.RenderDonutChart('#<%= moduleId + "_chart" %>', vm);
+                    }
+                }());
+            </script>
+<%       } %>
+
+
+
+<%    if (vm && moduleType == 'GooglePie') { %>
+
+          <div id="dashboard-browser-chart" class="chart-holder"></div>
+          <script type="text/javascript" src="scripts/charts/googlepie.js"></script>
+<%       } %>
+
+
+
+<%    if (vm && moduleType == 'GoogleMap') { %>
+                <div id="dashboard-visit-map"></div>
+                <script type="text/javascript" src="scripts/charts/googlemap.js"></script>
+<%       } %>
+
+
+<%    if (vm && moduleType == 'GoogleLine') { %>
+               <div id="dashboard-visit-chart" class="chart-holder">
+               </div>
+               <script type="text/javascript" src="scripts/charts/googleline.js"></script>
+<%       } %>
+
+
+<%    if (moduleType == 'ChoroplethMap') { %>                                           
+               <style>
+               .states {
+                 fill: none;
+                 stroke: #fff;
+                 stroke-linejoin: round;
+               }
+               .q0-9 { fill:rgb(247,251,255); }
+               .q1-9 { fill:rgb(222,235,247); }
+               .q2-9 { fill:rgb(198,219,239); }
+               .q3-9 { fill:rgb(158,202,225); }
+               .q4-9 { fill:rgb(107,174,214); }
+               .q5-9 { fill:rgb(66,146,198); }
+               .q6-9 { fill:rgb(33,113,181); }
+               .q7-9 { fill:rgb(8,81,156); }
+               .q8-9 { fill:rgb(8,48,107); }
+               </style>
+
+               <div id="<%= moduleId + "_chart" %>"></div>
+               <script src="scripts/d3/queue.v1.min.js"></script>
+               <script src="scripts/d3/topojson.v0.min.js"></script>
+               <script type="text/javascript">
+                  $(function ()
+                  {
+                     var cm = new ChartManager();
+                     
+                     cm.RenderChoropleth('#<%= moduleId + "_chart" %>', "/data/shared/datasets/geojson/demofestival.tsv", {width: 960, height: 500, geoJsonFile: "/data/shared/datasets/geojson/us.json"});
+                     
+                     //var vm = <%- JSON.stringify(vm) %>;
+                     //if (vm) {}
+                  }());
+
+               </script>                                           
+
+<%       } %>
+
+<%    if (moduleType == 'BulletChart') { %>
+               <style>
+				.bullet { font: 10px sans-serif; }
+				.bullet .marker { stroke: #000; stroke-width: 2px; }
+				.bullet .tick line { stroke: #666; stroke-width: .5px; }
+				.bullet .range.s0 { fill: #eee; }
+				.bullet .range.s1 { fill: #ddd; }
+				.bullet .range.s2 { fill: #ccc; }
+				.bullet .measure.s0 { fill: lightsteelblue; }
+				.bullet .measure.s1 { fill: steelblue; }
+				.bullet .title { font-size: 14px; font-weight: bold; }
+				.bullet .subtitle { fill: #999; }
+               </style>
+
+               <div id="<%= moduleId + "_chart" %>"></div>
+			   <script type="text/javascript" src="scripts/charts/bullet.js"></script>
+               <script type="text/javascript">
+                  $(function ()
+                  {
+	                    var vm = <%- JSON.stringify(vm) %>;
+	                    if (vm)
+	                    {
+                     		var cm = new ChartManager();
+                     		cm.RenderBulletCharts('#<%= moduleId + "_chart" %>', vm, {width: 960, height: 50});
+						 }
+                  }());
+               </script>
+<%       } %>
+
+
+<%    if (moduleType == 'WordCloud') { %>
+<%		var minHeight = 400; %>
+				<div id="<%= moduleId + "_chart" %>" style="min-height:<%= minHeight %>px; "></div>
+				<script src="scripts/d3/d3.layout.cloud.js"></script>
+				<script type="text/javascript">
+                  $(function ()
+                  {
+	                    var vm = <%- JSON.stringify(vm) %>;
+	                    if (vm)
+	                    {
+                     		var cm = new ChartManager();
+                     		cm.RenderWordCloud('#<%= moduleId + "_chart" %>', vm, { maxWidth:2000, maxHeight:2000, minWidth:100, minHeight:<%= minHeight %>, maxAngle:60});
+						 }
+                  }());
+               </script>
+<%       } %>
+
+
+<%    if (vm && moduleType == 'VerticalBarChart2') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+                $(function() 
+                {
+                    var vm = <%- JSON.stringify(vm) %>;
+                    if (vm)
+                    {
+                        var cm = new ChartManager();
+                        cm.RenderVerticalBarChart('#<%= moduleId + "_chart" %>', vm);
+                    }
+                }());
+            </script>              
+<%       } %>
+
+<%    if (vm && moduleType == 'VerticalBarChart') { %>
+            <div id="<%= moduleId + "_chart" %>" class="chart-holder"></div>
+            <script type="text/javascript">
+                $(function() 
+                {
+                    var vm = <%- JSON.stringify(vm) %>;
+                    if (vm && vm.series)
+                    {
+                        var cm = new ChartManager();
+                        var min = Number.MAX_VALUE; var max = Number.MIN_VALUE;
+                        for (var i = 0; i < vm.series.length; i++)
+                        {
+                            var series = vm.series[i];
+                            for( var j = 0; j < series.length; j++ )
+                            {
+                                if (series[j] < min) min = series[j];
+                                if (series[j] > max) max = series[j];
+                            }
+                        }
+                        if ((min >= 0) && (max <= 1.00)) 
+                        {
+                            cm.RenderVerticalBarChart('#<%= moduleId + "_chart" %>', vm, { yaxis: {type: 'percent'} });
+                        }
+                        else
+                        {
+                            cm.RenderVerticalBarChart('#<%= moduleId + "_chart" %>', vm);
+                        }
+                    }
+                }());
+            </script>              
+<%       } %>
+
+
+<%    if (vm && moduleType == 'Tableau') { %>
+                <div id="<%= moduleId + "_chart" %>" class="chart-holder" style="min-height:450px;height:450px;">
+                    <script type="text/javascript" src="http://public.tableausoftware.com/javascripts/api/viz_v1.js"></script>
+                    <div class="tableauPlaceholder" style="width:100%;height:100%;">
+                    <object class="tableauViz" width="663" height="437" style="display:none;"><param name="host_url" value="http%3A%2F%2Fpublic.tableausoftware.com%2F" /><param name="site_root" value="" /><param name="name" value="SampleDemographicsData&#47;Sheet1" /><param name="tabs" value="no" /><param name="toolbar" value="yes" /><param name="static_image" value="http:&#47;&#47;public.tableausoftware.com&#47;static&#47;images&#47;Sa&#47;SampleDemographicsData&#47;Sheet1&#47;1.png" /><param name="animate_transition" value="yes" /><param name="display_static_image" value="yes" /><param name="display_spinner" value="yes" /><param name="display_overlay" value="yes" /><param name="display_count" value="yes" /></object></div><div style="width:663px;height:22px;padding:0px 10px 0px 0px;color:black;font:normal 8pt verdana,helvetica,arial,sans-serif;"><div style="float:right; padding-right:8px;"></div></div>
+                </div>
+<%       } %>
+
+
+<%    if (moduleType == 'SocialStream') { %>                
+                <div class="row-fluid">
+                    <div class="span4">
+                        <form class="well" id="Form1" action="/?view=Streaming">
+                            <label>Twitter Queries</label>
+                            <br />
+                            <div class="row-fluid">
+                                <span class="span8"><input type="text" id="data" placeholder="Add a query"></span>
+                                <span class="span4"><button type="submit" class="btn" onclick="addTrack(); return false;" >Add</button></span>
+                            </div>
+                        </form>
+                        <div class="well">
+                            Tweet Activity: <span id='twitterspark' class='sparklines' />&nbsp;
+                        </div>
+                    </div>
+                    <div class="span8">
+                        <div class="well">
+                            <p>Twitter stream tracker(s):</p>
+                            <div id="tracker"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 well" id="twitter-stream">
+            	        <ul class="unstyled">
+        	            </ul>
+                    </div>
+                </div>
+            <script src="/socket.io/socket.io.js"></script>
+            <script>
+                twitterActivity = [];
+                var filters='';
+                var socket = io.connect();
+                socket.on('message', function(json) {
+                    data = JSON.parse(json);
+                    if (data) {
+                        var replacePattern = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+                        var replacedText = (data.text).replace(replacePattern, '<a href="$1" target="_blank">$1</a>');
+                        filters.forEach(function(str) {
+                            var search = new RegExp(str, "gim");
+                            replacedText = replacedText.replace(search, '<span class="label label-important">'+str+'</span>');
+                        });
+                    }
+                    var ul = $("ul.unstyled");
+                    if (ul.children().length > 100) ul.children()[ul.children().length-1].remove();
+                    $("<li></li>").html("[" + data.user.screen_name + "] " + replacedText).prependTo(ul);
+                    //.css({opacity:0}).slideDown("slow").animate({opacity:1},"slow");
+                });
+                socket.on("connect", function() {
+                    socket.emit('getfilter', function() {
+                    });
+                    console.log("connected");
+                });
+                socket.on("disconnect", function() {
+                    console.log("disconnected");
+                });
+                socket.on('pushfilter', function(f) {
+                    filters=f;
+                    $('#tracker').empty();    
+                    filters.forEach(function(str) {
+                        //$('<span class="label label-inverse" id="' + str '"><a class="theme-switch alert" href="#" id="' + str + '">' + str + '</a></span>').prependTo("#tracker");
+                        $('<div class="alert alert-block alert-error fade in" id="'+str+'"><a class="close" data-dismiss="alert" id="'+str+'" href="#">&times;</a><p>'+str+'</p></div></div>').prependTo("#tracker");
+                    });
+                });
+                socket.on('metricsupdate', function (metrics) {
+                    if (twitterActivity.length > 25) twitterActivity.shift();
+                    twitterActivity.push(metrics);
+                    console.log(metrics);
+                    var jel = $("#twitterspark"); if (jel) jel.sparkline(twitterActivity, { enableTagOptions: false, type: 'line', fillColor: false, minSpotColor: false, maxSpotColor: false, height: '12px', tooltipChartTitle: '<u>Live Factor Trending</u><br/><br/>', tooltipPrefix: 'Tweets per period: ' });
+                });
+
+                function addTrack() {
+                    socket.emit( 'data', '+', $('#data').attr('value'));
+                    $('#data').val('');
+                    socket.disconnect();
+                    socket.socket.reconnect();
+                }
+                $("#tracker").delegate('a', 'click', function() { 
+                    socket.emit( 'data', '-', $(this).attr('id'));
+                    socket.disconnect();
+                    socket.socket.reconnect();
+                });
+            </script>
+            </div>
+<%       } %>
+
+
+            </div>
+         </div>
+            <% if (footer) { %>
+            <h6><em><%- footer %></em></h6>
+            <% } %>                                       
+         </div>
+      </div>
+   </div>
+
+<%    } %>
+
+</div>
+
+<% } %>
+
+
+

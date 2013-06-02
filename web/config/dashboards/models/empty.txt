@@ -1,0 +1,2 @@
+View	Module	Type	Width	Row	Col	DataSource	Series1	Series2	Series3	Series4	Labels1	Labels2	Labels3	Labels4	Header	Footer	Config
+Summary	Notice	Answer	12	1	1	[Event Info]	[Value]				[Text]	[Header]			Instructions		
