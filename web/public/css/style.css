@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+.title form input{
+	background-color: red;
+}
+.title form:focus input{
+	background-color: blue;
+}
+
