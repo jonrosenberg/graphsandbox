@@ -1,12 +1,22 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
-  "dependencies": {
-    "express": "3.0.0rc5",
-    "ejs": "*"
+    "name": "CircleMediaHomePage"
+  , "version": "0.0.1"
+  , "private": true
+  , "dependencies": {
+      "express": "2.x"
+    , "jade": ">= 0.0.1"
+    , "ejs": "*" 
+    , "jslint": "*"
+    , "winston": "*"
+    , "loggly" : "*"
+    , "socket.io": "*"
+    , "ntwitter": "*"
+    , "redis": "*"
+    , "underscore": "*"
+    , "passport": ">= 0.0.0"
+    , "passport-oauth": ">= 0.0.0"
+    , "passport-facebook": ">= 0.0.0"
+    , "passport-local": ">= 0.0.0"
+    , "connect-roles": ">= 1.0.0"
   }
 }
