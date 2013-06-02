@@ -1,4 +1,4 @@
-lib-cov
+#lib-cov
 *.seed
 *.log
 *.dat
@@ -11,7 +11,7 @@ results
 npm-debug.log
 .project
 .DS_Store
-node_modules/
+#node_modules/
 .Rhistory
 .idea/
 config/dashboards/cache/
